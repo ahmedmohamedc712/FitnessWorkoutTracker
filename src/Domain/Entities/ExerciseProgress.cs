@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Security;
+using Domain.Exceptions;
 using NodaTime;
 
 namespace Domain.Entities;
@@ -25,4 +26,27 @@ public class ExerciseProgress
     public ScheduledWorkout? ScheduledWorkout { get; private set; }
     public Guid ExerciseId { get; private set; }
     public Exercise? Exercise { get; private set; }
+
+    public void Start(int sets, int reps)
+    {
+        ArgumentNullException.ThrowIfNull(ScheduledWorkout, nameof(ScheduledWorkout));
+
+        if (ScheduledWorkout.Status != WorkoutStatus.InProgress)
+            throw new ScheduledWorkoutNotInProgress(ScheduledWorkout.Id);
+
+        if (Status != ExerciseStatus.Pending)
+            return;
+
+        if (sets <= 0)
+            throw new NegativeNumberException("Sets can't be zero or negative.");
+
+        if (reps <= 0)
+            throw new NegativeNumberException("Reps can't be zero or negative.");
+
+        Status = ExerciseStatus.InProgress;
+        StartedAt = SystemClock.Instance.GetCurrentInstant();
+
+        Sets = sets;
+        Reps = reps;
+    }
 }
