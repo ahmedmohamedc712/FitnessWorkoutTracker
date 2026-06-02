@@ -23,4 +23,12 @@ public class Workout
     public Guid UserId { get; private set; }
     public ICollection<Exercise> Exercises { get; private set; } = [];
     public ICollection<ScheduledWorkout> ScheduledWorkouts { get; private set; } = [];
+
+    public void AddExercise(Exercise exercise)
+    {
+        ArgumentNullException.ThrowIfNull(exercise, nameof(exercise));
+        Exercises.Add(exercise);
+        ExercisesCount++;
+    }
+    public bool HasExercises => ExercisesCount > 0;
 }
