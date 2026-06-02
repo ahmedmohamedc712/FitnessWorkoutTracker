@@ -36,4 +36,20 @@ public class ScheduledWorkout
             Workout = workout
         };
     }
+
+    public void Start()
+    {
+        if (Status != WorkoutStatus.Pending)
+            return;
+
+        ArgumentNullException.ThrowIfNull(Workout, nameof(Workout));
+
+        Status = WorkoutStatus.InProgress;
+        StartedAt = SystemClock.Instance.GetCurrentInstant();
+
+        foreach (var exercise in Workout.Exercises)
+        {
+            ExerciseProgresses.Add(new ExerciseProgress(exercise.Id, this));
+        }
+    }
 }
