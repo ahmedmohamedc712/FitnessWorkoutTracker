@@ -64,8 +64,25 @@ public class ExerciseProgress
             CompletedAt = default;
 
         if (status == ExerciseStatus.Completed)
+        {
             CompletedAt = SystemClock.Instance.GetCurrentInstant();
+            if (ScheduledWorkout.HaveAllFinished)
+                ScheduledWorkout.Finish();
+        }
+            
 
         Status = status;
+    }
+
+    public void AddNote(string note)
+    {
+        ArgumentNullException.ThrowIfNull(note);
+        Notes.Add(new Note(note, Id));
+    }
+
+    public void UpdateNote(Note note, string newContent)
+    {
+        if (Status != ExerciseStatus.Completed)
+            note.Update(newContent);
     }
 }

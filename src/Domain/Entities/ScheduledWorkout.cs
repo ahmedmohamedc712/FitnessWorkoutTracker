@@ -52,4 +52,19 @@ public class ScheduledWorkout
             ExerciseProgresses.Add(new ExerciseProgress(exercise.Id, this));
         }
     }
+
+    public void Finish()
+    {
+        if (Status != WorkoutStatus.InProgress)
+            throw new ScheduledWorkoutNotInProgress(Id);
+
+        Status = WorkoutStatus.Completed;
+        foreach (var exerciseProgress in ExerciseProgresses)
+        {
+            if (exerciseProgress.Status != ExerciseStatus.Completed)
+                exerciseProgress.UpdateStatus(ExerciseStatus.Skipped);
+        }
+    }
+
+    public bool HaveAllFinished => ExerciseProgresses.All(x => x.Status == ExerciseStatus.Completed);
 }
