@@ -2,6 +2,7 @@ using System.Text;
 using Application.Abstraction;
 using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
+using Application.Features.Workouts.Create;
 using FastEndpoints;
 using Infrastructure.Data;
 using Infrastructure.Services.Authentication;
@@ -9,6 +10,7 @@ using Infrastructure.Services.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PublicApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +45,10 @@ builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<CreateWorkoutUseCase>();
 
 builder.Services.AddOpenApi();
 
