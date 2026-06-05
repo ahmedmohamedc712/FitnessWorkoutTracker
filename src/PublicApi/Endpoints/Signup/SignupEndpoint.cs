@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace PublicApi.Endpoints.Signup;
 
-public class SignupEndpoint(SignupUseCase signupUseCase) : Endpoint<SignupRequest, SignupResponse>
+public class SignupEndpoint(SignupUseCase signupUseCase) : Endpoint<SignupRequest, SignupResult>
 {
     public override void Configure()
     {
@@ -16,7 +16,7 @@ public class SignupEndpoint(SignupUseCase signupUseCase) : Endpoint<SignupReques
         var result = await signupUseCase.ExecuteAsync(
             new SignupCommand(req.Username, req.Email, req.Password));
 
-        await SendAsync(new SignupResponse()
+        await SendAsync(new SignupResult()
         {
             Token = result.Token
         });

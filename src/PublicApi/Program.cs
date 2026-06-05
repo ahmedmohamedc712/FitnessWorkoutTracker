@@ -1,5 +1,6 @@
 using System.Text;
 using Application.Abstraction;
+using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
 using FastEndpoints;
 using Infrastructure.Data;
@@ -38,6 +39,7 @@ builder.Services.AddAuthentication()
     });
 
 builder.Services.AddScoped<SignupUseCase>();
+builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
