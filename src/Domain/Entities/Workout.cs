@@ -5,6 +5,7 @@ namespace Domain.Entities;
 
 public class Workout
 {
+    private Workout() { } // required by EF Core
     public Workout(string title, string? description, Guid userId)
     {
         Id = Guid.NewGuid();
@@ -21,6 +22,7 @@ public class Workout
     public int ExercisesCount { get; private set; }
     public Instant CreatedAt { get; private set; }
     public Guid UserId { get; private set; }
+    public User? User { get; private set; }
     public ICollection<Exercise> Exercises { get; private set; } = [];
     public ICollection<ScheduledWorkout> ScheduledWorkouts { get; private set; } = [];
 

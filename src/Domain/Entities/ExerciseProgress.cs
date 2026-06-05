@@ -7,6 +7,7 @@ namespace Domain.Entities;
 
 public class ExerciseProgress
 {
+    private ExerciseProgress() { } // required by EF Core
     public ExerciseProgress(Guid exerciseId, ScheduledWorkout scheduledWorkout)
     {
         Id = Guid.NewGuid();
@@ -20,7 +21,7 @@ public class ExerciseProgress
     public int Reps { get; private set; }
     public ExerciseStatus Status { get; private set; }
     public Instant StartedAt { get; private set; }
-    public Instant CompletedAt { get; private set; }
+    public Instant? CompletedAt { get; private set; }
     public ICollection<Note> Notes { get; private set; } = [];
     public Guid ScheduledWorkoutId { get; private set; }
     public ScheduledWorkout? ScheduledWorkout { get; private set; }
@@ -64,25 +65,12 @@ public class ExerciseProgress
             CompletedAt = default;
 
         if (status == ExerciseStatus.Completed)
-        {
             CompletedAt = SystemClock.Instance.GetCurrentInstant();
-            if (ScheduledWorkout.HaveAllFinished)
-                ScheduledWorkout.Finish();
-        }
-            
-
         Status = status;
     }
-
     public void AddNote(string note)
     {
         ArgumentNullException.ThrowIfNull(note);
         Notes.Add(new Note(note, Id));
-    }
-
-    public void UpdateNote(Note note, string newContent)
-    {
-        if (Status != ExerciseStatus.Completed)
-            note.Update(newContent);
     }
 }

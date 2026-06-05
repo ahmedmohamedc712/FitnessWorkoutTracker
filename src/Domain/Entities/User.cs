@@ -2,6 +2,8 @@ namespace Domain.Entities;
 
 public class User
 {
+    private User() { } // required by EF Core
+
     public User(string username, string email, string hashedPassword)
     {
         Id = Guid.NewGuid();

@@ -4,6 +4,7 @@ namespace Domain.Entities;
 
 public class Exercise
 {
+    private Exercise() { } // required by EF Core
     public Exercise(string title, string? description, Guid workoutId)
     {
         Id = Guid.NewGuid();

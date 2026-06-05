@@ -11,7 +11,7 @@ public class ScheduledWorkout
     public Guid Id { get; private set; }
     public Instant SessionDate { get; private set; }
     public Instant StartedAt { get; private set; }
-    public Instant CompletedAt { get; private set; }
+    public Instant? CompletedAt { get; private set; }
     public WorkoutStatus Status { get; private set; }
     public Guid WorkoutId { get; private set; }
     public Workout? Workout { get; private set; }
@@ -52,13 +52,14 @@ public class ScheduledWorkout
             ExerciseProgresses.Add(new ExerciseProgress(exercise.Id, this));
         }
     }
-
     public void Finish()
     {
         if (Status != WorkoutStatus.InProgress)
             throw new ScheduledWorkoutNotInProgress(Id);
 
         Status = WorkoutStatus.Completed;
+        CompletedAt = SystemClock.Instance.GetCurrentInstant();
+
         foreach (var exerciseProgress in ExerciseProgresses)
         {
             if (exerciseProgress.Status != ExerciseStatus.Completed)
@@ -66,5 +67,14 @@ public class ScheduledWorkout
         }
     }
 
-    public bool HaveAllFinished => ExerciseProgresses.All(x => x.Status == ExerciseStatus.Completed);
+    public void Cancel()
+    {
+        Status = WorkoutStatus.Canceled;
+
+        foreach (var exerciseProgress in ExerciseProgresses)
+        {
+            if (exerciseProgress.Status != ExerciseStatus.Completed)
+                exerciseProgress.UpdateStatus(ExerciseStatus.Skipped);
+        }
+    }
 }
