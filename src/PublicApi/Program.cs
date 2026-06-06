@@ -3,13 +3,16 @@ using Application.Abstraction;
 using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
 using Application.Features.Workouts.Create;
+using Application.Features.Workouts.GetAll;
 using FastEndpoints;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Infrastructure.Services.Authentication;
 using Infrastructure.Services.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PublicApi;
 using PublicApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +52,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<CreateWorkoutUseCase>();
+builder.Services.AddScoped<GetWorkoutsUseCase>();
 
+builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile()));
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

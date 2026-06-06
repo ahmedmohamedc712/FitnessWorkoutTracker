@@ -93,6 +93,11 @@ namespace Infrastructure.Services.Repository
         {
             await context.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<IEnumerable<T>> WhereAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+        {
+           return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
+        }
     }
 
 }
