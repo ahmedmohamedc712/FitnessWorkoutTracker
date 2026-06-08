@@ -25,7 +25,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Exercise", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -53,7 +52,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ExerciseProgress", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CompletedAt")
@@ -90,7 +88,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Note", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -111,7 +108,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ScheduledWorkout", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CompletedAt")
@@ -140,7 +136,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
@@ -168,7 +163,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Workout", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")

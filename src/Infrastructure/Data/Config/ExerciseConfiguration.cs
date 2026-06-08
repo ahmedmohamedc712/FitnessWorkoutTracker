@@ -10,6 +10,8 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Exercise> builder)
         {
+            builder.Property(x => x.Id).ValueGeneratedNever();
+
             builder.Property(x => x.Title).HasMaxLength(50);
 
             builder.Property(x => x.Description).HasMaxLength(250);

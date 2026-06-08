@@ -10,6 +10,7 @@ public class Exercise
         Id = Guid.NewGuid();
         Title = title;
         Description = description;
+        CreatedAt = SystemClock.Instance.GetCurrentInstant();
         WorkoutId = workoutId; 
     }
     public Guid Id { get; private set; }

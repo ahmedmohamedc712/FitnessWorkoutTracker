@@ -8,6 +8,8 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.Property(x => x.Id).ValueGeneratedNever();
+
             builder.Property(x => x.Username).HasMaxLength(30);
 
             builder.Property(x => x.Email).HasMaxLength(256);

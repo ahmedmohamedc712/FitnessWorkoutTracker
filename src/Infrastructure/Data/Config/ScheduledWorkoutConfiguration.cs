@@ -10,6 +10,8 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<ScheduledWorkout> builder)
         {
+            builder.Property(x => x.Id).ValueGeneratedNever();
+
             builder.Property(x => x.Status)
                 .HasConversion<string>();
 

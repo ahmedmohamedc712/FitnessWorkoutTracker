@@ -2,6 +2,7 @@ using System.Text;
 using Application.Abstraction;
 using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
+using Application.Features.Exercises.Create;
 using Application.Features.Workouts.Create;
 using Application.Features.Workouts.GetAll;
 using FastEndpoints;
@@ -53,6 +54,9 @@ builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<CreateWorkoutUseCase>();
 builder.Services.AddScoped<GetWorkoutsUseCase>();
+
+builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+builder.Services.AddScoped<CreateExerciseUseCase>();
 
 builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile()));
 builder.Services.AddOpenApi();

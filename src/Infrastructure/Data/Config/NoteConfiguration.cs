@@ -8,6 +8,8 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Note> builder)
         {
+            builder.Property(x => x.Id).ValueGeneratedNever();
+
             builder.Property(x => x.Content).HasMaxLength(75);
         }
     }

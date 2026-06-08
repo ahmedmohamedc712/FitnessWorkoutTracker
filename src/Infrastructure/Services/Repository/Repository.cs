@@ -22,7 +22,7 @@ namespace Infrastructure.Services.Repository
             await _dbSet.AddRangeAsync(entities, cancellationToken);
         }
 
-        public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _dbSet.FindAsync(new object[] { id }, cancellationToken: cancellationToken);
         }
@@ -75,7 +75,7 @@ namespace Infrastructure.Services.Repository
             _dbSet.RemoveRange(entities);
         }
 
-        public async Task DeleteByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await GetByIdAsync(id, cancellationToken);
             if (entity != null)

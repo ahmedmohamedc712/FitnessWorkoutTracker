@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace PublicApi.Endpoints.Workouts.Create
 {
-    public class CreateWorkoutEndpont(CreateWorkoutUseCase createWorkoutUseCase)
+    public class CreateWorkoutEndpoint(CreateWorkoutUseCase createWorkoutUseCase)
         : Endpoint<CreateWorkoutCommand, CreateWorkoutResponse>
     {
         public override void Configure()

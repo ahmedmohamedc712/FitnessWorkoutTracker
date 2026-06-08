@@ -9,7 +9,7 @@ namespace Application.Abstraction
     {
         Task AddAsync(T entity, CancellationToken cancellationToken = default);
         Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
-        Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
         Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
@@ -20,7 +20,7 @@ namespace Application.Abstraction
         void UpdateRange(IEnumerable<T> entities);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> entities);
-        Task DeleteByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         // Query operations
         IQueryable<T> Query();
