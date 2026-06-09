@@ -1,10 +1,11 @@
 ﻿using Application.Features.Workouts.GetAll;
 using FastEndpoints;
+using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.Workouts.Get
 {
-    public class GetWorkoutsEndpoint(GetWorkoutsUseCase getWorkoutsUseCase, 
-        AutoMapper.IMapper mapper) : EndpointWithoutRequest<GetWorkoutsResponse>
+    public class GetWorkoutsEndpoint(GetWorkoutsUseCase getWorkoutsUseCase) 
+        : EndpointWithoutRequest<GetWorkoutsResponse>
     {
         public override void Configure()
         {
@@ -13,14 +14,9 @@ namespace PublicApi.Endpoints.Workouts.Get
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            var result = await getWorkoutsUseCase.ExecuteAsync();
+            var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
 
-            var workoutDtos = result.Workouts.Select(x => mapper.Map<WorkoutDto>(x));
-
-            var response = new GetWorkoutsResponse()
-            {
-                WorkoutDtos = [.. workoutDtos]
-            };
+            var response = await getWorkoutsUseCase.ExecuteAsync(userZone);
 
             await SendAsync(response, cancellation: ct);
         }

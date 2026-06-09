@@ -5,18 +5,28 @@ using Domain.Entities;
 namespace Application.Features.Workouts.GetAll
 {
     public class GetWorkoutsUseCase(IWorkoutRepository workoutRepository,
-        ICurrentUserAccessor currentUserAccessor
+        ICurrentUserAccessor currentUserAccessor,
+        IUtcLocalConverter utcLocalConverter
     )  
     {
-        public async Task<GetWorkoutsResult> ExecuteAsync()
+        public async Task<GetWorkoutsResponse> ExecuteAsync(string userZone)
         {
             var userId = currentUserAccessor.GetId();
 
             var workouts =  await workoutRepository.GetAllAsync(userId);
 
-            return new GetWorkoutsResult()
+            var workoutDtos = workouts.Select(x => new WorkoutDto()
             {
-                Workouts = [.. workouts]
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                ExercisesCount = x.ExercisesCount,
+                CreatedAt = utcLocalConverter.ConvertUtcToLocal(x.CreatedAt, userZone)
+            });
+
+            return new GetWorkoutsResponse()
+            {
+                Workouts = [.. workoutDtos]
             };
         }
     }
