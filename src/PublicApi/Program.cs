@@ -4,8 +4,10 @@ using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
 using Application.Features.Exercises.Create;
 using Application.Features.Exercises.Get;
+using Application.Features.ScheduledWorkouts.Schedule;
 using Application.Features.Workouts.Create;
 using Application.Features.Workouts.GetAll;
+using Domain.Entities;
 using FastEndpoints;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -61,6 +63,8 @@ builder.Services.AddScoped<CreateExerciseUseCase>();
 builder.Services.AddScoped<GetExercisesUseCases>();
 
 builder.Services.AddSingleton<IUtcLocalConverter, UtcLocalConverter>();
+
+builder.Services.AddScoped<ScheduleWorkoutUseCase>();
 
 builder.Services.AddOpenApi();
 

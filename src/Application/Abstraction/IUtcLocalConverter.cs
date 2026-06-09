@@ -7,6 +7,7 @@ namespace Application.Abstraction
 {
     public interface IUtcLocalConverter
     {
+        Instant ConvertLocalToUtc(DateTime localTime, string userZone);
         DateTime ConvertUtcToLocal(Instant utc, string userZone);
     }
 

@@ -20,7 +20,7 @@ public class ExerciseProgress
     public int Sets { get; private set; }
     public int Reps { get; private set; }
     public ExerciseStatus Status { get; private set; }
-    public Instant StartedAt { get; private set; }
+    public Instant? StartedAt { get; private set; }
     public Instant? CompletedAt { get; private set; }
     public ICollection<Note> Notes { get; private set; } = [];
     public Guid ScheduledWorkoutId { get; private set; }

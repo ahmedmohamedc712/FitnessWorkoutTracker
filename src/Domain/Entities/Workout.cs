@@ -33,4 +33,10 @@ public class Workout
         ExercisesCount++;
     }
     public bool HasExercises => ExercisesCount > 0;
+
+    public void AddScheduledWorkout(ScheduledWorkout scheduledWorkout)
+    {
+        ArgumentNullException.ThrowIfNull(scheduledWorkout, nameof(scheduledWorkout));
+        ScheduledWorkouts.Add(scheduledWorkout);
+    }
 }

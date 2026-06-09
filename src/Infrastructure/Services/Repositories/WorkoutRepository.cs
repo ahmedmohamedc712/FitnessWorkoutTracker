@@ -31,5 +31,12 @@ namespace Infrastructure.Services.Repository
         {
             await context.SaveChangesAsync();
         }
+
+        public async Task<Workout?> GetByIdWithScheduledWorkoutsAsync(Guid workoutId, Guid userId)
+        {
+            return await context.Workouts
+                .Include(x => x.ScheduledWorkouts)
+                .FirstOrDefaultAsync(x => x.Id == workoutId && x.UserId == userId);
+        }
     }
 }
