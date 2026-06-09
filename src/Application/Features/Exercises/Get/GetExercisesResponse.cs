@@ -1,6 +1,8 @@
-﻿using Application.Features.Exercises.Get;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace PublicApi.Endpoints.Exercises.Get
+namespace Application.Features.Exercises.Get
 {
     public class GetExercisesResponse
     {

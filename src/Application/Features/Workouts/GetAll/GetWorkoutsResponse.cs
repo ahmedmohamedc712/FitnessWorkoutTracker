@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Application.Features.Workouts.GetAll
 {
-    public class GetWorkoutsResult
+    public class GetWorkoutsResponse
     {
-        public List<Workout> Workouts { get; set; } = [];
+        public List<WorkoutDto> Workouts { get; set; } = [];
     }
 }

@@ -60,7 +60,8 @@ builder.Services.AddScoped<CreateExerciseUseCase>();
 
 builder.Services.AddScoped<GetExercisesUseCases>();
 
-builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile()));
+builder.Services.AddSingleton<IUtcLocalConverter, UtcLocalConverter>();
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

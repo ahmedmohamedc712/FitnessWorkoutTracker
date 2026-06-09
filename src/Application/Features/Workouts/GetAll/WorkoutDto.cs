@@ -11,6 +11,6 @@ namespace Application.Features.Workouts.GetAll
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }
         public int ExercisesCount { get; set; }
-        public Instant CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

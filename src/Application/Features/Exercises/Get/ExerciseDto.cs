@@ -7,9 +7,9 @@ namespace Application.Features.Exercises.Get
 {
     public class ExerciseDto
     {
-        public Guid Id { get; private set; }
-        public string Title { get; private set; } = string.Empty;
-        public string? Description { get; private set; }
-        public Instant CreatedAt { get; private set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

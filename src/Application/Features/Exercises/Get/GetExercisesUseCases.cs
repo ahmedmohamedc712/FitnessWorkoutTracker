@@ -9,9 +9,10 @@ using System.Text;
 namespace Application.Features.Exercises.Get
 {
     public class GetExercisesUseCases(IWorkoutRepository workoutRepository, 
-        ICurrentUserAccessor currentUserAccessor)
+        ICurrentUserAccessor currentUserAccessor,
+        IUtcLocalConverter utcLocalConverter)
     {
-        public async Task<IEnumerable<Exercise>> Execute(Guid workoutId)
+        public async Task<GetExercisesResponse> Execute(Guid workoutId, string userZone)
         {
             var userId = currentUserAccessor.GetId();
 
@@ -19,7 +20,19 @@ namespace Application.Features.Exercises.Get
             if (workout is null)
                 throw new NotFoundException($"Workout with ID `{workoutId} not found.`");
 
-            return workout.Exercises;
+
+            var exerciseDtos = workout.Exercises.Select(x => new ExerciseDto()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                CreatedAt = utcLocalConverter.ConvertUtcToLocal(x.CreatedAt, userZone)
+            });
+
+            return new GetExercisesResponse()
+            {
+                ExerciseDtos = [.. exerciseDtos]
+            };
         }
     }
 }
