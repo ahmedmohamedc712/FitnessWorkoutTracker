@@ -33,8 +33,8 @@ public class ExerciseProgress
         if (ScheduledWorkout.Status != WorkoutStatus.InProgress)
             throw new ScheduledWorkoutNotInProgressException(ScheduledWorkout.Id);
 
-        // if (Status != ExerciseStatus.Pending)
-        //     throw new ExerciseNotPendingException(Id);
+        if (Status != ExerciseStatus.Pending)
+            throw new ExerciseNotPendingException(Id);
 
         if (sets <= 0)
             throw new NegativeNumberException("Sets can't be zero or negative.");
