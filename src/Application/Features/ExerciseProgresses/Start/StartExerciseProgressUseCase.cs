@@ -21,9 +21,8 @@ public class StartExerciseProgressUseCase(IExerciseProgressRepository exercisePr
             throw new NotFoundException($"Exercise progress `{exerciseProgressId}` not found.");
 
         exerciseProgress.Start(request.Sets, request.Reps);
-        await exerciseProgressRepository.SaveChangesAsync();
 
-        return new StartExerciseResponse()
+        var response = new StartExerciseResponse()
         {
             Id = exerciseProgressId,
             StartedAt = utcLocalConverter
@@ -33,5 +32,9 @@ public class StartExerciseProgressUseCase(IExerciseProgressRepository exercisePr
             Reps = exerciseProgress.Reps,
             Status = exerciseProgress.Status
         };
+        
+        await exerciseProgressRepository.SaveChangesAsync();
+
+        return response;
     }
 }

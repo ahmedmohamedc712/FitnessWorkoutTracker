@@ -18,13 +18,16 @@ public class StartScheduledWorkoutUseCase(IScheduledWorkoutRepository scheduledW
             throw new NotFoundException($"Scheduled workout with ID `{scheduledWorkoutId}` not found.");
 
         scheduledWorkout.Start();
-        await scheduledWorkoutRepository.SaveChangesAsync();
 
-        return new StartScheduledWorkoutResponse()
+        var response = new StartScheduledWorkoutResponse()
         {
             Id = scheduledWorkout.Id,
             StartedAt = utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.StartedAt.GetValueOrDefault(), userZone),
             Status = scheduledWorkout.Status
         };
+
+        await scheduledWorkoutRepository.SaveChangesAsync();
+        
+        return response;
     }
 }

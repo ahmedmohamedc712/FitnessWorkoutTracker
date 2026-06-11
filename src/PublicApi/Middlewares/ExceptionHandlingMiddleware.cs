@@ -2,6 +2,7 @@ using Application.Exceptions;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using NodaTime.TimeZones;
 
 namespace PublicApi.Middlewares;
 
@@ -17,6 +18,11 @@ public class ExceptionHandlingMiddleware(RequestDelegate next,
         catch (DomainException ex)
         {
             await WriteProperProblemDetails(context, StatusCodes.Status400BadRequest, ex.Message);
+        }
+        catch (DateTimeZoneNotFoundException)
+        {
+            await WriteProperProblemDetails(context, StatusCodes.Status400BadRequest, 
+                "Invalid user time zone. Check 'X-TimeZone' header.");
         }
         catch (InvalidUserCredentialsException ex)
         {
