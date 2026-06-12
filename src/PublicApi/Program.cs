@@ -2,6 +2,7 @@ using System.Text;
 using Application.Abstraction;
 using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
+using Application.Features.ExerciseProgresses.AddNote;
 using Application.Features.ExerciseProgresses.GetAll;
 using Application.Features.ExerciseProgresses.Start;
 using Application.Features.ExerciseProgresses.Update;
@@ -78,6 +79,8 @@ builder.Services.AddScoped<StartExerciseProgressUseCase>();
 builder.Services.AddScoped<GetExerciseProgressesUseCase>();
 
 builder.Services.AddScoped<UpdateExerciseProgressStatusUseCase>();
+
+builder.Services.AddScoped<AddNoteToExerciseProgressUseCase>();
 
 builder.Services.AddOpenApi();
 
