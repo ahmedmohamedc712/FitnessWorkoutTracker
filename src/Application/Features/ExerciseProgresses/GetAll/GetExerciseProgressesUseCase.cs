@@ -7,7 +7,7 @@ namespace Application.Features.ExerciseProgresses.GetAll;
 
 public class GetExerciseProgressesUseCase(IScheduledWorkoutRepository scheduledWorkoutRepository,
     ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter)
+    IUtcLocalConverter utcLocalConverter) : IGetExerciseProgressesUseCase
 {
     public async Task<GetExerciseProgressesResponse> ExecuteAsync(Guid scheduledWorkoutId, string userZone)
     {

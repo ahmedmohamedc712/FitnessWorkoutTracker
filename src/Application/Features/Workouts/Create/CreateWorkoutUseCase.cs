@@ -9,14 +9,14 @@ namespace Application.Features.Workouts.Create
 {
     public class CreateWorkoutUseCase(IWorkoutRepository workoutRepository,
         ICurrentUserAccessor currentUserAccessor
-    )
+    ) : ICreateWorkoutUseCase
     {
         public async Task<CreateWorkoutResponse> ExecuteAsync(CreateWorkoutCommand command)
         {
             var userId = currentUserAccessor.GetId();
 
             var workout = new Workout(command.Title, command.Description, userId);
-            
+
             await workoutRepository.AddAsync(workout);
             await workoutRepository.SaveChangesAsync();
 

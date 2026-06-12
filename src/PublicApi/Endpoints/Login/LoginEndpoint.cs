@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace PublicApi.Endpoints.Login
 {
-    public class LoginEndpoint(LoginUseCase loginUseCase) : Endpoint<LoginCommand, LoginResponse>
+    public class LoginEndpoint(ILoginUseCase loginUseCase) : Endpoint<LoginCommand, LoginResponse>
     {
         public override void Configure()
         {

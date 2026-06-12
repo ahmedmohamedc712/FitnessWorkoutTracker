@@ -5,9 +5,9 @@ using Domain.Entities;
 
 namespace Application.Features.ScheduledWorkouts.Schedule;
 
-public class ScheduleWorkoutUseCase(IWorkoutRepository workoutRepository, 
+public class ScheduleWorkoutUseCase(IWorkoutRepository workoutRepository,
     ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter)
+    IUtcLocalConverter utcLocalConverter) : IScheduleWorkoutUseCase
 {
     public async Task<ScheduleWorkoutResponse> ExecuteAsync(DateTime sessionDate, Guid workoutId, string userZone)
     {

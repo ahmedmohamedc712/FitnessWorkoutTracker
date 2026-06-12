@@ -6,7 +6,7 @@ namespace Application.Features.ScheduledWorkouts.Start;
 
 public class StartScheduledWorkoutUseCase(IScheduledWorkoutRepository scheduledWorkoutRepository,
     ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter)
+    IUtcLocalConverter utcLocalConverter) : IStartScheduledWorkoutUseCase
 {
     public async Task<StartScheduledWorkoutResponse> ExecuteAsync(Guid scheduledWorkoutId, string userZone)
     {
@@ -27,7 +27,7 @@ public class StartScheduledWorkoutUseCase(IScheduledWorkoutRepository scheduledW
         };
 
         await scheduledWorkoutRepository.SaveChangesAsync();
-        
+
         return response;
     }
 }

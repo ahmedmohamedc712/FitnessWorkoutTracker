@@ -4,7 +4,7 @@ using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.ExerciseProgresses.Start;
 
-public class StartExerciseEndpoint(StartExerciseProgressUseCase startExerciseProgressUseCase) : Endpoint<StartExerciseRequest, StartExerciseResponse>
+public class StartExerciseProgressEndpoint(IStartExerciseProgressUseCase startExerciseProgressUseCase) : Endpoint<StartExerciseRequest, StartExerciseResponse>
 {
     public override void Configure()
     {

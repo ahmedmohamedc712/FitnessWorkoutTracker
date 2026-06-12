@@ -11,7 +11,7 @@ namespace Application.Features.Authentication.Login
     public class LoginUseCase(IUserRepository userRepository,
         IJwtProvider jwtProvider,
         IPasswordHasher passwordHasher
-    )
+    ) : ILoginUseCase
     {
         public async Task<LoginResponse> ExecuteAsync(LoginCommand command)
         {

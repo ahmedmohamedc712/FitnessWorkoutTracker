@@ -8,9 +8,10 @@ namespace Application.Features.ExerciseProgresses.Update;
 
 public class UpdateExerciseProgressStatusUseCase(IExerciseProgressRepository exerciseProgressRepository,
     ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter)
+    IUtcLocalConverter utcLocalConverter) : IUpdateExerciseProgressStatusUseCase
 {
-    public async Task<UpdateExerciseProgressStatusResponse> ExecuteAsync(Guid exerciseProgressId, string userZone, UpdateExerciseProgressStatusRequest req)
+    public async Task<UpdateExerciseProgressStatusResponse> ExecuteAsync(Guid exerciseProgressId, string userZone,
+        UpdateExerciseProgressStatusRequest req)
     {
         if (string.IsNullOrWhiteSpace(userZone))
             throw new DateTimeZoneNotFoundException("");
@@ -32,7 +33,7 @@ public class UpdateExerciseProgressStatusUseCase(IExerciseProgressRepository exe
         };
 
         await exerciseProgressRepository.SaveChangesAsync();
-        
+
         return response;
     }
 }

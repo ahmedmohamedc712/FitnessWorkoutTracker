@@ -10,7 +10,7 @@ namespace Application.Features.Exercises.Create
 {
     public class CreateExerciseUseCase(IWorkoutRepository workoutRepository,
         ICurrentUserAccessor currentUserAccessor
-    )
+    ) : ICreateExerciseUseCase
     {
         public async Task<CreateExerciseResponse> ExecuteAsync(Guid workoutId, CreateExerciseRequest req)
         {

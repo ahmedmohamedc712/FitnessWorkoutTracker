@@ -4,7 +4,7 @@ using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.ExerciseProgresses.GetById;
 
-public class GetExerciseProgressByIdEndpoint(GetExerciseProgressByIdUseCase getExerciseProgressByIdUseCase)
+public class GetExerciseProgressByIdEndpoint(IGetExerciseProgressByIdUseCase getExerciseProgressByIdUseCase)
     : EndpointWithoutRequest<GetExerciseProgressByIdResponse>
 {
     public override void Configure()

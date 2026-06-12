@@ -8,7 +8,7 @@ namespace Application.Features.ExerciseProgresses.GetById;
 
 public class GetExerciseProgressByIdUseCase(IExerciseProgressRepository exerciseProgressRepository,
     ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter)
+    IUtcLocalConverter utcLocalConverter) : IGetExerciseProgressByIdUseCase
 {
     public async Task<GetExerciseProgressByIdResponse> ExecuteAsync(Guid exerciseProgressId, string userZone)
     {

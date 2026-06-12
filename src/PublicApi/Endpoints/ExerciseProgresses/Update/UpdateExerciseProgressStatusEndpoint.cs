@@ -5,7 +5,7 @@ using PublicApi.Constants;
 namespace PublicApi.Endpoints.ExerciseProgresses.Update;
 
 public class UpdateExerciseProgressStatusEndpoint(
-    UpdateExerciseProgressStatusUseCase updateExerciseProgressStatusUseCase)
+    IUpdateExerciseProgressStatusUseCase updateExerciseProgressStatusUseCase)
         : Endpoint<UpdateExerciseProgressStatusRequest, UpdateExerciseProgressStatusResponse>
 {
     public override void Configure()

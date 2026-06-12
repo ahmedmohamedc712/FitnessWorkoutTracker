@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace PublicApi.Endpoints.Exercises.Create
 {
-    public class CreateExerciseEndpoint(CreateExerciseUseCase createExerciseUseCase) : Endpoint<CreateExerciseRequest, CreateExerciseResponse>
+    public class CreateExerciseEndpoint(ICreateExerciseUseCase createExerciseUseCase) : Endpoint<CreateExerciseRequest, CreateExerciseResponse>
     {
         public override void Configure()
         {

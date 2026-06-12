@@ -7,13 +7,13 @@ namespace Application.Features.Workouts.GetAll
     public class GetWorkoutsUseCase(IWorkoutRepository workoutRepository,
         ICurrentUserAccessor currentUserAccessor,
         IUtcLocalConverter utcLocalConverter
-    )  
+    ) : IGetWorkoutsUseCase
     {
         public async Task<GetWorkoutsResponse> ExecuteAsync(string userZone)
         {
             var userId = currentUserAccessor.GetId();
 
-            var workouts =  await workoutRepository.GetAllAsync(userId);
+            var workouts = await workoutRepository.GetAllAsync(userId);
 
             var workoutDtos = workouts.Select(x => new WorkoutDto()
             {

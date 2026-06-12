@@ -52,38 +52,38 @@ builder.Services.AddAuthentication()
         };
     });
 
-builder.Services.AddScoped<SignupUseCase>();
-builder.Services.AddScoped<LoginUseCase>();
+builder.Services.AddScoped<ISignupUseCase, SignupUseCase>();
+builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
-builder.Services.AddScoped<CreateWorkoutUseCase>();
-builder.Services.AddScoped<GetWorkoutsUseCase>();
+builder.Services.AddScoped<ICreateWorkoutUseCase, CreateWorkoutUseCase>();
+builder.Services.AddScoped<IGetWorkoutsUseCase, GetWorkoutsUseCase>();
 
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
-builder.Services.AddScoped<CreateExerciseUseCase>();
+builder.Services.AddScoped<ICreateExerciseUseCase, CreateExerciseUseCase>();
 
-builder.Services.AddScoped<GetExercisesUseCases>();
+builder.Services.AddScoped<IGetExercisesUseCases, GetExercisesUseCases>();
 
 builder.Services.AddSingleton<IUtcLocalConverter, UtcLocalConverter>();
 
-builder.Services.AddScoped<ScheduleWorkoutUseCase>();
+builder.Services.AddScoped<IScheduleWorkoutUseCase, ScheduleWorkoutUseCase>();
 
 builder.Services.AddScoped<IScheduledWorkoutRepository, ScheduledWorkoutRepository>();
-builder.Services.AddScoped<StartScheduledWorkoutUseCase>();
+builder.Services.AddScoped<IStartScheduledWorkoutUseCase, StartScheduledWorkoutUseCase>();
 
 builder.Services.AddScoped<IExerciseProgressRepository, ExerciseProgressRepository>();
-builder.Services.AddScoped<StartExerciseProgressUseCase>();
+builder.Services.AddScoped<IStartExerciseProgressUseCase, StartExerciseProgressUseCase>();
 
-builder.Services.AddScoped<GetExerciseProgressesUseCase>();
+builder.Services.AddScoped<IGetExerciseProgressesUseCase, GetExerciseProgressesUseCase>();
 
-builder.Services.AddScoped<UpdateExerciseProgressStatusUseCase>();
+builder.Services.AddScoped<IUpdateExerciseProgressStatusUseCase, UpdateExerciseProgressStatusUseCase>();
 
-builder.Services.AddScoped<AddNoteToExerciseProgressUseCase>();
+builder.Services.AddScoped<IAddNoteToExerciseProgressUseCase, AddNoteToExerciseProgressUseCase>();
 
-builder.Services.AddScoped<GetExerciseProgressByIdUseCase>();
+builder.Services.AddScoped<IGetExerciseProgressByIdUseCase, GetExerciseProgressByIdUseCase>();
 
 builder.Services.AddOpenApi();
 

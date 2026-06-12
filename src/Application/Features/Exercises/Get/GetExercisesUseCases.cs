@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Application.Features.Exercises.Get
 {
-    public class GetExercisesUseCases(IWorkoutRepository workoutRepository, 
+    public class GetExercisesUseCases(IWorkoutRepository workoutRepository,
         ICurrentUserAccessor currentUserAccessor,
-        IUtcLocalConverter utcLocalConverter)
+        IUtcLocalConverter utcLocalConverter) : IGetExercisesUseCases
     {
         public async Task<GetExercisesResponse> ExecuteAsync(Guid workoutId, string userZone)
         {

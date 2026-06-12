@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace PublicApi.Endpoints.Signup;
 
-public class SignupEndpoint(SignupUseCase signupUseCase) : Endpoint<SignupRequest, SignupResult>
+public class SignupEndpoint(ISignupUseCase signupUseCase) : Endpoint<SignupRequest, SignupResult>
 {
     public override void Configure()
     {

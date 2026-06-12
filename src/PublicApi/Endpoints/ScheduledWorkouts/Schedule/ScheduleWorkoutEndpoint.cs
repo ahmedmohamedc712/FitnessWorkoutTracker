@@ -4,7 +4,7 @@ using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.ScheduledWorkouts;
 
-public class ScheduleWorkoutEndpoint(ScheduleWorkoutUseCase scheduleWorkoutUseCase) : Endpoint<ScheduleWorkoutRequest, ScheduleWorkoutResponse>
+public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseCase) : Endpoint<ScheduleWorkoutRequest, ScheduleWorkoutResponse>
 {
     public override void Configure()
     {

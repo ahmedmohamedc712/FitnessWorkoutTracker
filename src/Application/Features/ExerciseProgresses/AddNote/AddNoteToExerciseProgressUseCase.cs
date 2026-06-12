@@ -5,7 +5,7 @@ using Application.Features.Workouts.Create;
 namespace Application.Features.ExerciseProgresses.AddNote;
 
 public class AddNoteToExerciseProgressUseCase(IExerciseProgressRepository exerciseProgressRepository,
-    ICurrentUserAccessor currentUserAccessor)
+    ICurrentUserAccessor currentUserAccessor) : IAddNoteToExerciseProgressUseCase
 {
     public async Task ExecuteAsync(Guid exerciseProgressId, AddNoteRequest req)
     {

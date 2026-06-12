@@ -7,7 +7,7 @@ namespace Application.Features.Authentication.Signup;
 public class SignupUseCase(IUserRepository userRepository,
     IJwtProvider jwtProvider,
     IPasswordHasher passwordHasher
-)
+) : ISignupUseCase
 
 {
     public async Task<SignupResult> ExecuteAsync(SignupCommand command)

@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace PublicApi.Endpoints.ExerciseProgresses.AddNote;
 
-public class AddNoteToExerciseProgressEndpoint(AddNoteToExerciseProgressUseCase addNoteToExerciseProgressUseCase)
+public class AddNoteToExerciseProgressEndpoint(IAddNoteToExerciseProgressUseCase addNoteToExerciseProgressUseCase)
     : Endpoint<AddNoteRequest>
 {
     public override void Configure()

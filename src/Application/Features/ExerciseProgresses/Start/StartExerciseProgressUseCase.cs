@@ -6,7 +6,7 @@ namespace Application.Features.ExerciseProgresses.Start;
 
 public class StartExerciseProgressUseCase(IExerciseProgressRepository exerciseProgressRepository,
     ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter)
+    IUtcLocalConverter utcLocalConverter) : IStartExerciseProgressUseCase
 {
     public async Task<StartExerciseResponse> ExecuteAsync(Guid exerciseProgressId,
         StartExerciseRequest request,

@@ -4,7 +4,7 @@ using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.Exercises.Get
 {
-    public class GetExercisesEndpoint(GetExercisesUseCases getExercisesUseCases)
+    public class GetExercisesEndpoint(IGetExercisesUseCases getExercisesUseCases)
         : EndpointWithoutRequest<GetExercisesResponse>
     {
         public override void Configure()
