@@ -9,6 +9,7 @@ using Application.Features.ExerciseProgresses.Start;
 using Application.Features.ExerciseProgresses.Update;
 using Application.Features.Exercises.Create;
 using Application.Features.Exercises.Get;
+using Application.Features.ScheduledWorkouts.GetAll;
 using Application.Features.ScheduledWorkouts.Schedule;
 using Application.Features.ScheduledWorkouts.Start;
 using Application.Features.Workouts.Create;
@@ -84,6 +85,8 @@ builder.Services.AddScoped<IUpdateExerciseProgressStatusUseCase, UpdateExerciseP
 builder.Services.AddScoped<IAddNoteToExerciseProgressUseCase, AddNoteToExerciseProgressUseCase>();
 
 builder.Services.AddScoped<IGetExerciseProgressByIdUseCase, GetExerciseProgressByIdUseCase>();
+
+builder.Services.AddScoped<IGetScheduledWorkoutsUseCase, GetScheduledWorkoutsUseCase>();
 
 builder.Services.AddOpenApi();
 
