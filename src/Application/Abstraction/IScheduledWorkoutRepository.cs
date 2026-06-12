@@ -5,5 +5,6 @@ namespace Application.Abstraction;
 public interface IScheduledWorkoutRepository
 {
     Task<ScheduledWorkout?> GetByIdWithWorkoutThenExercises(Guid scheduledWorkoutId);
+    Task<ScheduledWorkout?> GetByIdWithExerciseProgressesThenWithExercise(Guid scheduledWorkoutId, Guid userId);
     Task SaveChangesAsync();
 }

@@ -7,6 +7,15 @@ namespace Infrastructure.Services.Repositories;
 
 public class ScheduledWorkoutRepository(AppDbContext context) : IScheduledWorkoutRepository
 {
+    public async Task<ScheduledWorkout?> GetByIdWithExerciseProgressesThenWithExercise(Guid scheduledWorkoutId, Guid userId)
+    {
+        return await context.ScheduledWorkouts
+            .AsNoTracking()
+            .Include(x => x.ExerciseProgresses)
+            .ThenInclude(x => x.Exercise)
+            .FirstOrDefaultAsync(x => x.Id == scheduledWorkoutId && x.Workout!.UserId == userId);
+    }
+
     public async Task<ScheduledWorkout?> GetByIdWithWorkoutThenExercises(Guid scheduledWorkoutId)
     {
         return await context.ScheduledWorkouts
