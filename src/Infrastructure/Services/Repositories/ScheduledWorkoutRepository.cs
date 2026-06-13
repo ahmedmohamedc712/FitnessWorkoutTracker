@@ -16,6 +16,14 @@ public class ScheduledWorkoutRepository(AppDbContext context) : IScheduledWorkou
             .ToListAsync();
     }
 
+    public async Task<ScheduledWorkout?> GetByIdWithWorkout(Guid scheduledWorkoutId, Guid userId)
+    {
+        return await context.ScheduledWorkouts
+            .AsNoTracking()
+            .Include(x => x.Workout)
+            .FirstOrDefaultAsync(x => x.Id == scheduledWorkoutId && x.Workout!.UserId == userId);
+    }
+
     public async Task<ScheduledWorkout?> GetByIdWithExerciseProgressesThenWithExercise(Guid scheduledWorkoutId, Guid userId)
     {
         return await context.ScheduledWorkouts
