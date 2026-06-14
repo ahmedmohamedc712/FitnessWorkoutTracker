@@ -7,6 +7,6 @@ namespace Application.Features.Workouts.GetAll
 {
     public class GetWorkoutsResponse
     {
-        public List<WorkoutDto> Workouts { get; set; } = [];
+        public IEnumerable<WorkoutDto> Workouts { get; set; } = [];
     }
 }

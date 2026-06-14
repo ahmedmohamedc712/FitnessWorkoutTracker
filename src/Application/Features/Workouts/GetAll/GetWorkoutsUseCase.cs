@@ -1,6 +1,7 @@
 ﻿using Application.Abstraction;
 using Application.Features.Workouts.Create;
 using Domain.Entities;
+using NodaTime.TimeZones;
 
 namespace Application.Features.Workouts.GetAll
 {
@@ -11,6 +12,9 @@ namespace Application.Features.Workouts.GetAll
     {
         public async Task<GetWorkoutsResponse> ExecuteAsync(string userZone)
         {
+            if (string.IsNullOrWhiteSpace(userZone))
+                throw new DateTimeZoneNotFoundException("");
+
             var userId = currentUserAccessor.GetId();
 
             var workouts = await workoutRepository.GetAllAsync(userId);
@@ -26,7 +30,7 @@ namespace Application.Features.Workouts.GetAll
 
             return new GetWorkoutsResponse()
             {
-                Workouts = [.. workoutDtos]
+                Workouts = workoutDtos
             };
         }
     }

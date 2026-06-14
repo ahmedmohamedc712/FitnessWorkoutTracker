@@ -1,6 +1,7 @@
 using Application.Abstraction;
 using Application.Exceptions;
 using Application.Features.Workouts.Create;
+using NodaTime.TimeZones;
 
 namespace Application.Features.ScheduledWorkouts.Start;
 
@@ -10,6 +11,9 @@ public class StartScheduledWorkoutUseCase(IScheduledWorkoutRepository scheduledW
 {
     public async Task<StartScheduledWorkoutResponse> ExecuteAsync(Guid scheduledWorkoutId, string userZone)
     {
+        if (string.IsNullOrWhiteSpace(userZone))
+            throw new DateTimeZoneNotFoundException("");
+            
         var scheduledWorkout = await scheduledWorkoutRepository
             .GetByIdWithWorkoutThenExercises(scheduledWorkoutId);
 

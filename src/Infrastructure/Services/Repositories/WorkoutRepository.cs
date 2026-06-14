@@ -19,7 +19,9 @@ namespace Infrastructure.Services.Repositories
 
        public async Task<IEnumerable<Workout>> GetAllAsync(Guid userId)
         {
-            return await context.Workouts.Where(x => x.UserId == userId).ToListAsync();
+            return await context.Workouts
+            .AsNoTracking()
+            .Where(x => x.UserId == userId).ToListAsync();
         }
 
         public async Task AddAsync(Workout workout)

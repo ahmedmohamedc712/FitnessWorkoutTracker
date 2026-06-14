@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Features.Exercises.Get
+namespace Application.Features.Exercises.GetAll
 {
     public class GetExercisesResponse
     {
-        public List<ExerciseDto> ExerciseDtos { get; set; } = [];
+        public IEnumerable<ExerciseDto> ExerciseDtos { get; set; } = [];
     }
 }

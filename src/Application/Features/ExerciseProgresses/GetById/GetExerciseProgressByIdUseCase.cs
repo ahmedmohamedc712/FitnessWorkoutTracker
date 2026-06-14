@@ -31,14 +31,21 @@ public class GetExerciseProgressByIdUseCase(IExerciseProgressRepository exercise
             Sets = exerciseProgress.Sets,
             Reps = exerciseProgress.Reps,
             Status = exerciseProgress.Status,
-            StartedAt = utcLocalConverter.ConvertUtcToLocal(exerciseProgress.StartedAt.GetValueOrDefault(), userZone),
-            CompletedAt = utcLocalConverter.ConvertUtcToLocal(exerciseProgress.CompletedAt.GetValueOrDefault(), userZone),
             Notes = exerciseProgress.Notes.Select(x => new NoteDto()
             {
                 Id = x.Id,
                 Content = x.Content
             })
+
         };
+        if (exerciseProgress.StartedAt is not null)
+            response.StartedAt = utcLocalConverter
+                .ConvertUtcToLocal(exerciseProgress.StartedAt.GetValueOrDefault(), userZone);
+
+        if (exerciseProgress.CompletedAt is not null)
+            response.CompletedAt = utcLocalConverter
+                .ConvertUtcToLocal(exerciseProgress.CompletedAt.GetValueOrDefault(), userZone);
+
 
         return response;
     }

@@ -1,7 +1,7 @@
 using Application.Features.Authentication.Signup;
 using FastEndpoints;
 
-namespace PublicApi.Endpoints.Signup;
+namespace PublicApi.Endpoints.Authentication.Signup;
 
 public class SignupEndpoint(ISignupUseCase signupUseCase) : Endpoint<SignupRequest, SignupResult>
 {

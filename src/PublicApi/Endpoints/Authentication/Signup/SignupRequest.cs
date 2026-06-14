@@ -1,4 +1,4 @@
-namespace PublicApi.Endpoints.Signup;
+namespace PublicApi.Endpoints.Authentication.Signup;
 
 public class SignupRequest
 {

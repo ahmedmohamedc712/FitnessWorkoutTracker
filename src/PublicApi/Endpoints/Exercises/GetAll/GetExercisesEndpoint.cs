@@ -1,8 +1,8 @@
-﻿using Application.Features.Exercises.Get;
+﻿using Application.Features.Exercises.GetAll;
 using FastEndpoints;
 using PublicApi.Constants;
 
-namespace PublicApi.Endpoints.Exercises.Get
+namespace PublicApi.Endpoints.Exercises.GetAll
 {
     public class GetExercisesEndpoint(IGetExercisesUseCases getExercisesUseCases)
         : EndpointWithoutRequest<GetExercisesResponse>

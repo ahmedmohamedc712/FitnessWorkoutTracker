@@ -2,7 +2,7 @@
 using FastEndpoints;
 using FluentValidation;
 
-namespace PublicApi.Endpoints.Login
+namespace PublicApi.Endpoints.Authentication.Login
 {
     public class LoginCommandValidator : Validator<LoginCommand>
     {

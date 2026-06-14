@@ -2,7 +2,7 @@
 using FastEndpoints;
 using PublicApi.Constants;
 
-namespace PublicApi.Endpoints.Workouts.Get
+namespace PublicApi.Endpoints.Workouts.GetAll
 {
     public class GetWorkoutsEndpoint(IGetWorkoutsUseCase getWorkoutsUseCase) 
         : EndpointWithoutRequest<GetWorkoutsResponse>

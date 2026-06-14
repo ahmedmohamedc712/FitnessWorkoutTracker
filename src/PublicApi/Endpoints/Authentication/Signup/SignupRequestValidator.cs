@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using FastEndpoints;
 using FluentValidation;
 
-namespace PublicApi.Endpoints.Signup;
+namespace PublicApi.Endpoints.Authentication.Signup;
 
 public class SignupRequestValidator : Validator<SignupRequest>
 {

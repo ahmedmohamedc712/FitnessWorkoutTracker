@@ -1,6 +1,7 @@
 using Application.Abstraction;
 using Application.Exceptions;
 using Application.Features.Workouts.Create;
+using NodaTime.TimeZones;
 
 namespace Application.Features.ExerciseProgresses.Start;
 
@@ -12,6 +13,9 @@ public class StartExerciseProgressUseCase(IExerciseProgressRepository exercisePr
         StartExerciseRequest request,
         string userZone)
     {
+        if (string.IsNullOrWhiteSpace(userZone))
+            throw new DateTimeZoneNotFoundException("");
+            
         var userId = currentUserAccessor.GetId();
 
         var exerciseProgress = await exerciseProgressRepository

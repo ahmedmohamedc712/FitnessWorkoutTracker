@@ -1,7 +1,7 @@
 ﻿using Application.Features.Authentication.Login;
 using FastEndpoints;
 
-namespace PublicApi.Endpoints.Login
+namespace PublicApi.Endpoints.Authentication.Login
 {
     public class LoginEndpoint(ILoginUseCase loginUseCase) : Endpoint<LoginCommand, LoginResponse>
     {

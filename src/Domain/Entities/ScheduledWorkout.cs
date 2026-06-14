@@ -6,6 +6,7 @@ namespace Domain.Entities;
 
 public class ScheduledWorkout
 {
+    private readonly List<ExerciseProgress> _exerciseProgresses = [];
     private ScheduledWorkout() { }
 
     public Guid Id { get; private set; }
@@ -15,10 +16,12 @@ public class ScheduledWorkout
     public WorkoutStatus Status { get; private set; }
     public Guid WorkoutId { get; private set; }
     public Workout? Workout { get; private set; }
-    public ICollection<ExerciseProgress> ExerciseProgresses { get; private set; } = [];
+    public IReadOnlyCollection<ExerciseProgress> ExerciseProgresses => _exerciseProgresses;
 
     public static ScheduledWorkout Schedule(Workout workout, Instant sessionDate)
     {
+        ArgumentNullException.ThrowIfNull(workout, nameof(workout));
+
         if (!workout.HasExercises)
             throw new WorkoutWithoutExercisesException(workout.Id);
 
@@ -37,17 +40,17 @@ public class ScheduledWorkout
 
     public void Start()
     {
+        ArgumentNullException.ThrowIfNull(Workout, nameof(Workout));
+        
         if (Status != WorkoutStatus.Pending)
             throw new ScheduledWorkoutNotPendingException(Id);
-
-        ArgumentNullException.ThrowIfNull(Workout, nameof(Workout));
 
         Status = WorkoutStatus.InProgress;
         StartedAt = SystemClock.Instance.GetCurrentInstant();
 
         foreach (var exercise in Workout.Exercises)
         {
-            ExerciseProgresses.Add(new ExerciseProgress(exercise.Id, this));
+            _exerciseProgresses.Add(new ExerciseProgress(exercise.Id, this));
         }
     }
     public void Finish()

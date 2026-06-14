@@ -2,11 +2,12 @@
 using Application.Exceptions;
 using Application.Features.Workouts.Create;
 using Domain.Entities;
+using NodaTime.TimeZones;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Features.Exercises.Get
+namespace Application.Features.Exercises.GetAll
 {
     public class GetExercisesUseCases(IWorkoutRepository workoutRepository,
         ICurrentUserAccessor currentUserAccessor,
@@ -14,12 +15,14 @@ namespace Application.Features.Exercises.Get
     {
         public async Task<GetExercisesResponse> ExecuteAsync(Guid workoutId, string userZone)
         {
+            if (string.IsNullOrWhiteSpace(userZone))
+                throw new DateTimeZoneNotFoundException("");
+                
             var userId = currentUserAccessor.GetId();
 
             var workout = await workoutRepository.GetByIdWithExercisesAsync(workoutId, userId);
             if (workout is null)
                 throw new NotFoundException($"Workout with ID `{workoutId} not found.`");
-
 
             var exerciseDtos = workout.Exercises.Select(x => new ExerciseDto()
             {
@@ -31,7 +34,7 @@ namespace Application.Features.Exercises.Get
 
             return new GetExercisesResponse()
             {
-                ExerciseDtos = [.. exerciseDtos]
+                ExerciseDtos = exerciseDtos
             };
         }
     }

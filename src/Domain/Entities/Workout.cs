@@ -5,6 +5,8 @@ namespace Domain.Entities;
 
 public class Workout
 {
+    private readonly List<Exercise> _exercises = [];
+    private readonly List<ScheduledWorkout> _scheduledWorkouts = [];
     private Workout() { } // required by EF Core
     public Workout(string title, string? description, Guid userId)
     {
@@ -23,18 +25,20 @@ public class Workout
     public Instant CreatedAt { get; private set; }
     public Guid UserId { get; private set; }
     public User? User { get; private set; }
-    public ICollection<Exercise> Exercises { get; private set; } = [];
-    public ICollection<ScheduledWorkout> ScheduledWorkouts { get; private set; } = [];
+    public IReadOnlyCollection<Exercise> Exercises => _exercises;
+    public IReadOnlyCollection<ScheduledWorkout> ScheduledWorkouts => _scheduledWorkouts;
 
     public void AddExercise(Exercise exercise)
     {
-        Exercises.Add(exercise);
+        ArgumentNullException.ThrowIfNull(exercise, nameof(exercise));
+        _exercises.Add(exercise);
         ExercisesCount++;
     }
     public bool HasExercises => ExercisesCount > 0;
 
     public void AddScheduledWorkout(ScheduledWorkout scheduledWorkout)
     {
-        ScheduledWorkouts.Add(scheduledWorkout);
+        ArgumentNullException.ThrowIfNull(scheduledWorkout, nameof(scheduledWorkout));
+        _scheduledWorkouts.Add(scheduledWorkout);
     }
 }

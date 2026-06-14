@@ -9,7 +9,7 @@ using Application.Features.ExerciseProgresses.GetById;
 using Application.Features.ExerciseProgresses.Skip;
 using Application.Features.ExerciseProgresses.Start;
 using Application.Features.Exercises.Create;
-using Application.Features.Exercises.Get;
+using Application.Features.Exercises.GetAll;
 using Application.Features.ScheduledWorkouts.Cancel;
 using Application.Features.ScheduledWorkouts.Finish;
 using Application.Features.ScheduledWorkouts.GetAll;

@@ -1,4 +1,4 @@
-namespace Application.Features.Exercises.Get
+namespace Application.Features.Exercises.GetAll
 {
     public interface IGetExercisesUseCases
     {
