@@ -45,4 +45,10 @@ public class ScheduledWorkoutRepository(AppDbContext context) : IScheduledWorkou
             .Include(x => x.ExerciseProgresses)
             .FirstOrDefaultAsync(x => x.Id == scheduledWorkoutId && x.Workout!.UserId == userId);
     }
+
+    public async Task<ScheduledWorkout?> GetByIdAsync(Guid scheduledWorkoutId, Guid userId)
+    {
+        return await context.ScheduledWorkouts
+            .FirstOrDefaultAsync(x => x.Id == scheduledWorkoutId && x.Workout!.UserId == userId);
+    }
 }

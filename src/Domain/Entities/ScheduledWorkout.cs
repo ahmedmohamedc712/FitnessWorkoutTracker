@@ -82,4 +82,15 @@ public class ScheduledWorkout
 
         Status = WorkoutStatus.Canceled;
     }
+
+    public void Reschedule(Instant sessionInstant)
+    {
+        if (Status != WorkoutStatus.Pending)
+            throw new ScheduledWorkoutNotPendingException("Cannot reschedule a workout session that was started before.");
+
+        if (sessionInstant < SystemClock.Instance.GetCurrentInstant())
+            throw new SessionDateNotInTheFutureException();
+
+        SessionDate = sessionInstant;
+    }
 }

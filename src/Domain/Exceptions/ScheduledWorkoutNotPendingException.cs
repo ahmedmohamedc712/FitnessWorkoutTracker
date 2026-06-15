@@ -6,4 +6,9 @@ public class ScheduledWorkoutNotPendingException : DomainException
     {
         
     }
+
+    public ScheduledWorkoutNotPendingException(string message) : base(message)
+    {
+        
+    }
 }
