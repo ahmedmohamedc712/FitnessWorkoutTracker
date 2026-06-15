@@ -1,4 +1,3 @@
-using Application.Features.ScheduledWorkouts.GetAll;
 using Application.Features.ScheduledWorkouts.GetById;
 using FastEndpoints;
 using PublicApi.Constants;

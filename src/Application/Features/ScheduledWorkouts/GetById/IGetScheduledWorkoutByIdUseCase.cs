@@ -1,4 +1,4 @@
-using Application.Features.ScheduledWorkouts.GetAll;
+using Application.Features.Workouts.GetById;
 
 namespace Application.Features.ScheduledWorkouts.GetById;
 

@@ -5,7 +5,7 @@ using PublicApi.Constants;
 namespace PublicApi.Endpoints.ScheduledWorkouts.Start;
 
 public class StartScheduledWorkoutEndpoint(IStartScheduledWorkoutUseCase startScheduledWorkoutUseCase)
-    : EndpointWithoutRequest<StartScheduledWorkoutResponse>
+    : EndpointWithoutRequest
 {
     public override void Configure()
     {
@@ -16,11 +16,9 @@ public class StartScheduledWorkoutEndpoint(IStartScheduledWorkoutUseCase startSc
     {
         var scheduledWorkoutId = Route<Guid>("id");
 
-        var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
+        await startScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId);
 
-        var response = await startScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId, userZone);
-
-        await SendAsync(response, cancellation: ct);
+        await SendNoContentAsync(ct);
     }
 
 }

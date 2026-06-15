@@ -12,7 +12,6 @@ using Application.Features.Exercises.Create;
 using Application.Features.Exercises.GetAll;
 using Application.Features.ScheduledWorkouts.Cancel;
 using Application.Features.ScheduledWorkouts.Finish;
-using Application.Features.ScheduledWorkouts.GetAll;
 using Application.Features.ScheduledWorkouts.GetById;
 using Application.Features.ScheduledWorkouts.Schedule;
 using Application.Features.ScheduledWorkouts.Start;
@@ -90,8 +89,6 @@ builder.Services.AddScoped<IGetExerciseProgressesUseCase, GetExerciseProgressesU
 builder.Services.AddScoped<IAddNoteToExerciseProgressUseCase, AddNoteToExerciseProgressUseCase>();
 
 builder.Services.AddScoped<IGetExerciseProgressByIdUseCase, GetExerciseProgressByIdUseCase>();
-
-builder.Services.AddScoped<IGetScheduledWorkoutsUseCase, GetScheduledWorkoutsUseCase>();
 
 builder.Services.AddScoped<IGetScheduledWorkoutByIdUseCase, GetScheduledWorkoutByIdUseCase>();
 

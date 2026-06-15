@@ -7,15 +7,6 @@ namespace Infrastructure.Services.Repositories;
 
 public class ScheduledWorkoutRepository(AppDbContext context) : IScheduledWorkoutRepository
 {
-    public async Task<IEnumerable<ScheduledWorkout>> GetAllWithWorkout(Guid workoutId, Guid userId)
-    {
-        return await context.ScheduledWorkouts
-            .AsNoTracking()
-            .Include(x => x.Workout)
-            .Where(x => x.WorkoutId == workoutId && x.Workout!.UserId == userId)
-            .ToListAsync();
-    }
-
     public async Task<ScheduledWorkout?> GetByIdWithWorkout(Guid scheduledWorkoutId, Guid userId)
     {
         return await context.ScheduledWorkouts

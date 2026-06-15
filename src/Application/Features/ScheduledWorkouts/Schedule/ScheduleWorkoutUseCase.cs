@@ -10,7 +10,7 @@ public class ScheduleWorkoutUseCase(IWorkoutRepository workoutRepository,
     ICurrentUserAccessor currentUserAccessor,
     IUtcLocalConverter utcLocalConverter) : IScheduleWorkoutUseCase
 {
-    public async Task<ScheduleWorkoutResponse> ExecuteAsync(DateTime sessionDate, Guid workoutId, string userZone)
+    public async Task<Guid> ExecuteAsync(DateTime sessionDate, Guid workoutId, string userZone)
     {
         if (string.IsNullOrWhiteSpace(userZone))
             throw new DateTimeZoneNotFoundException("");
@@ -27,11 +27,6 @@ public class ScheduleWorkoutUseCase(IWorkoutRepository workoutRepository,
         workout.AddScheduledWorkout(scheduledWorkout);
         await workoutRepository.SaveChangesAsync();
 
-        return new ScheduleWorkoutResponse()
-        {
-            Id = scheduledWorkout.Id,
-            SessionDate = sessionDate,
-            Status = scheduledWorkout.Status
-        };
+        return scheduledWorkout.Id;
     }
 }

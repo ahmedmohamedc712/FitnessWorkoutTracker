@@ -1,6 +1,5 @@
 using Application.Abstraction;
 using Application.Exceptions;
-using Application.Features.ScheduledWorkouts.GetAll;
 using Application.Features.Workouts.Create;
 using NodaTime.TimeZones;
 

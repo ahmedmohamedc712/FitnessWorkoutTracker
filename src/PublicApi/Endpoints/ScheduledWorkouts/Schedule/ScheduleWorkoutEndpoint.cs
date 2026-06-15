@@ -1,10 +1,11 @@
 using Application.Features.ScheduledWorkouts.Schedule;
 using FastEndpoints;
 using PublicApi.Constants;
+using PublicApi.Endpoints.ScheduledWorkouts.GetById;
 
 namespace PublicApi.Endpoints.ScheduledWorkouts;
 
-public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseCase) : Endpoint<ScheduleWorkoutRequest, ScheduleWorkoutResponse>
+public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseCase) : Endpoint<ScheduleWorkoutRequest>
 {
     public override void Configure()
     {
@@ -17,9 +18,12 @@ public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseC
 
         var workoutId = Route<Guid>("workoutId");
 
-        var response = await scheduleWorkoutUseCase.ExecuteAsync(req.SessionDate, workoutId, userZone);
+        var id = await scheduleWorkoutUseCase.ExecuteAsync(req.SessionDate, workoutId, userZone);
 
-        await SendAsync(response, cancellation: ct);
+        await SendCreatedAtAsync<GetScheduledWorkoutByIdEndpoint>(
+            new { id },
+            new EmptyResponse(),
+            generateAbsoluteUrl: true,
+            cancellation: ct);
     }
-
 }

@@ -1,18 +1,14 @@
 using Application.Abstraction;
 using Application.Exceptions;
 using Application.Features.Workouts.Create;
-using NodaTime.TimeZones;
 
 namespace Application.Features.ScheduledWorkouts.Start;
 
 public class StartScheduledWorkoutUseCase(IScheduledWorkoutRepository scheduledWorkoutRepository,
-    ICurrentUserAccessor currentUserAccessor,
-    IUtcLocalConverter utcLocalConverter) : IStartScheduledWorkoutUseCase
+    ICurrentUserAccessor currentUserAccessor) : IStartScheduledWorkoutUseCase
 {
-    public async Task<StartScheduledWorkoutResponse> ExecuteAsync(Guid scheduledWorkoutId, string userZone)
+    public async Task ExecuteAsync(Guid scheduledWorkoutId)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-            throw new DateTimeZoneNotFoundException("");
             
         var userId = currentUserAccessor.GetId();
 
@@ -24,15 +20,6 @@ public class StartScheduledWorkoutUseCase(IScheduledWorkoutRepository scheduledW
 
         scheduledWorkout.Start();
 
-        var response = new StartScheduledWorkoutResponse()
-        {
-            Id = scheduledWorkout.Id,
-            StartedAt = utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.StartedAt.GetValueOrDefault(), userZone),
-            Status = scheduledWorkout.Status
-        };
-
         await scheduledWorkoutRepository.SaveChangesAsync();
-
-        return response;
     }
 }

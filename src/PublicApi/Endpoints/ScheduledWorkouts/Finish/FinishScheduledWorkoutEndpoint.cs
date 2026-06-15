@@ -1,12 +1,10 @@
 using Application.Features.ScheduledWorkouts.Finish;
-using Application.Features.ScheduledWorkouts.GetAll;
 using FastEndpoints;
-using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.ScheduledWorkouts.Finish;
 
 public class FinishScheduledWorkoutEndpoint(IFinishScheduledWorkoutUseCase finishScheduledWorkoutUseCase)
-    : EndpointWithoutRequest<ScheduledWorkoutDto>
+    : EndpointWithoutRequest
 {
     public override void Configure()
     {
@@ -15,12 +13,10 @@ public class FinishScheduledWorkoutEndpoint(IFinishScheduledWorkoutUseCase finis
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
-
         var scheduledWorkoutId = Route<Guid>("id");
 
-        var scheduledWorkoutDto = await finishScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId, userZone);
+        await finishScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId);
 
-        await SendAsync(scheduledWorkoutDto, cancellation: ct);
+        await SendNoContentAsync(ct);
     }
 }
