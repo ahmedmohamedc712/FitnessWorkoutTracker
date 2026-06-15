@@ -1,4 +1,4 @@
-﻿using Application.Features.Workouts.Create;
+﻿using Application.Abstraction;
 using System.Security.Claims;
 
 namespace PublicApi.Services

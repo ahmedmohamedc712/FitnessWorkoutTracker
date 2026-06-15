@@ -4,6 +4,7 @@ using Application.Features.Authentication.Login;
 using Application.Features.Authentication.Signup;
 using Application.Features.ExerciseProgresses.AddNote;
 using Application.Features.ExerciseProgresses.Complete;
+using Application.Features.ExerciseProgresses.Delete;
 using Application.Features.ExerciseProgresses.GetAll;
 using Application.Features.ExerciseProgresses.GetById;
 using Application.Features.ExerciseProgresses.Skip;
@@ -85,6 +86,7 @@ builder.Services.AddScoped<IStartScheduledWorkoutUseCase, StartScheduledWorkoutU
 
 builder.Services.AddScoped<IExerciseProgressRepository, ExerciseProgressRepository>();
 builder.Services.AddScoped<IStartExerciseProgressUseCase, StartExerciseProgressUseCase>();
+builder.Services.AddScoped<IDeleteExerciseProgressUseCase, DeleteExerciseProgressUseCase>();
 
 builder.Services.AddScoped<IGetExerciseProgressesUseCase, GetExerciseProgressesUseCase>();
 

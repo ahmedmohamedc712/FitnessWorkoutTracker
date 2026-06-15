@@ -24,6 +24,11 @@ public class ExerciseProgressRepository(AppDbContext context) : IExerciseProgres
                 x.ScheduledWorkout!.Workout!.UserId == userId);
     }
 
+    public void Delete(ExerciseProgress exerciseProgress)
+    {
+        context.Remove(exerciseProgress);
+    }
+
     public async Task<ExerciseProgress?> GetByIdWithExerciseAndNotes(Guid exerciseProgressId, Guid userId)
     {
         return await context.ExerciseProgresses

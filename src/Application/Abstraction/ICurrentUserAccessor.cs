@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Features.Workouts.Create
+namespace Application.Abstraction
 {
     public interface ICurrentUserAccessor
     {
