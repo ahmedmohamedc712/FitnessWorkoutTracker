@@ -71,8 +71,11 @@ public class ScheduledWorkout
 
     public void Cancel()
     {
-        if (Status != WorkoutStatus.InProgress)
-            throw new ScheduledWorkoutNotInProgressException(Id);
+        if (Status != WorkoutStatus.Completed)
+            throw new ScheduledWorkoutCannotBeCanceledException("Cannot cancel a completed scheduled workout.");
+        
+        if (Status == WorkoutStatus.Canceled)
+            return;
 
         foreach (var exerciseProgress in ExerciseProgresses)
         {
