@@ -1,21 +1,21 @@
 ﻿using Application.Abstraction;
 using Application.Exceptions;
-using Application.Features.Workouts.Create;
+using Application.Specifications.Exercises;
 using Application.Specifications.Workouts;
+using Ardalis.Specification;
 using Domain.Entities;
 using NodaTime.TimeZones;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Features.Exercises.GetAll
 {
-    public class GetExercisesUseCase(IRepository<Workout> repository,
+    public class GetExercisesUseCase(
+        IReadRepository<Workout> workoutRepository,
+        IReadRepository<Exercise> exerciseRepository,
         ICurrentUserAccessor currentUserAccessor,
         IUtcLocalConverter utcLocalConverter,
         IAppLogger<GetExercisesUseCase> logger) : IGetExercisesUseCase
     {
-        public async Task<GetExercisesResponse> ExecuteAsync(Guid workoutId, string userZone)
+        public async Task<GetExercisesResponse> ExecuteAsync(GetExercisesRequest req, Guid workoutId, string userZone)
         {
             if (string.IsNullOrWhiteSpace(userZone))
             {
@@ -25,18 +25,29 @@ namespace Application.Features.Exercises.GetAll
 
             var userId = currentUserAccessor.GetId();
 
-            var spec = new GetWorkoutByIdWithExercisesSpec(workoutId, userId);
-            Workout? workout = await repository.FirstOrDefaultAsync(spec);
+            var workoutSpec = new WorkoutExistsReadonlySpec(workoutId, userId);
+            var workoutExists = await workoutRepository.AnyAsync(workoutSpec);
 
-            if (workout is null)
+            if (!workoutExists)
             {
-                logger.LogInformation("Workout not found.\nWorkoutId: {WorkoutId}",
+                logger.LogInformation("Workout not found for retrieving exercises.\nWorkoutId: {WorkoutId}",
                     workoutId);
 
                 throw new NotFoundException($"Workout with ID `{workoutId} not found.`");
             }
 
-            var exerciseDtos = workout.Exercises.Select(x => new ExerciseDto()
+            var exercisesSpec = new GetExercisesReadonlySpec(
+                workoutId,
+                userId,
+                req.SearchTerm?.Trim().ToLower(),
+                req.SortOrder?.Trim().ToLower(),
+                skip: (req.Page - 1) * req.PageSize,
+                take: req.PageSize
+            );
+
+            var  exercises = await exerciseRepository.ListAsync(exercisesSpec);
+
+            var exerciseDtos = exercises.Select(x => new ExerciseDto()
             {
                 Id = x.Id,
                 Title = x.Title,
