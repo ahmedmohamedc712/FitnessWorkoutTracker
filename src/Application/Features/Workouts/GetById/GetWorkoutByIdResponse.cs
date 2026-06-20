@@ -7,6 +7,5 @@ public class GetWorkoutByIdResponse
     public string? Description { get; set; }
     public int ExercisesCount { get; set; }
     public DateTime CreatedAt { get; set; }
-    public IEnumerable<ScheduledWorkoutDto> ScheduledWorkoutDtos { get; set; } = [];
 
 }

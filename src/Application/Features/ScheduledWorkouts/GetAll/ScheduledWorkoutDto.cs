@@ -1,6 +1,6 @@
 using Domain.Entities;
 
-namespace Application.Features.Workouts.GetById;
+namespace Application.Features.ScheduledWorkouts.GetAll;
 
 public class ScheduledWorkoutDto
 {

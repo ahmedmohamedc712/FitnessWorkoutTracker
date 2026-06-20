@@ -21,7 +21,7 @@ public class GetWorkoutByIdUseCase(IReadRepository<Workout> readRepository,
 
         var userId = currentUserAccessor.GetId();
 
-        var spec = new GetWorkoutByIdWithOrderedScheduledWorkoutsReadonlySpec(workoutId, userId);
+        var spec = new GetWorkoutByIdReadonlySpec(workoutId, userId);
         var workout = await readRepository.FirstOrDefaultAsync(spec);
 
         if (workout is null)
@@ -39,19 +39,6 @@ public class GetWorkoutByIdUseCase(IReadRepository<Workout> readRepository,
             Description = workout.Description,
             CreatedAt = utcLocalConverter.ConvertUtcToLocal(workout.CreatedAt, userZone),
             ExercisesCount = workout.ExercisesCount,
-            ScheduledWorkoutDtos = workout.ScheduledWorkouts
-                .Select(scheduledWorkout => new ScheduledWorkoutDto()
-                {
-                    Id = scheduledWorkout.Id,
-                    Status = scheduledWorkout.Status,
-                    SessionDate = utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.SessionDate, userZone),
-                    StartedAt = scheduledWorkout.StartedAt is null
-                        ? null
-                        : utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.StartedAt.Value, userZone),
-                    CompletedAt = scheduledWorkout.CompletedAt is null
-                        ? null
-                        : utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.CompletedAt.Value, userZone)
-                })
         };
     }
 
