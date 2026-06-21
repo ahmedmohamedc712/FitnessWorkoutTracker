@@ -40,17 +40,15 @@ public class GetScheduledWorkoutByIdUseCase(IReadRepository<ScheduledWorkout> re
             Title = scheduledWorkout.Workout!.Title,
             Description = scheduledWorkout.Workout!.Description,
             SessionDate = utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.SessionDate, userZone),
-            Status = scheduledWorkout.Status
+            Status = scheduledWorkout.Status,
+            StartedAt = scheduledWorkout.StartedAt == null
+                ? null
+                : utcLocalConverter.ConvertUtcToLocal(scheduledWorkout.StartedAt.Value, userZone),
+            CompletedAt = scheduledWorkout.CompletedAt == null
+                ? null
+                : utcLocalConverter
+                .ConvertUtcToLocal(scheduledWorkout.CompletedAt.Value, userZone)
         };
-
-
-        if (scheduledWorkout.StartedAt is not null)
-            scheduledWorkoutDto.StartedAt = utcLocalConverter
-                .ConvertUtcToLocal(scheduledWorkout.StartedAt.GetValueOrDefault(), userZone);
-
-        if (scheduledWorkout.CompletedAt is not null)
-            scheduledWorkoutDto.CompletedAt = utcLocalConverter
-                .ConvertUtcToLocal(scheduledWorkout.CompletedAt.GetValueOrDefault(), userZone);
 
         logger.LogDebug("Retrieved scheduled workout details. ScheduledWorkoutId: {ScheduledWorkoutId}, Status: {Status}, UserId: {UserId}",
             scheduledWorkoutId, scheduledWorkout.Status, userId);

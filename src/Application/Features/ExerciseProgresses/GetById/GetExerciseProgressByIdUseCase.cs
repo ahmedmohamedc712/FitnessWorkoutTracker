@@ -39,21 +39,20 @@ public class GetExerciseProgressByIdUseCase(IReadRepository<ExerciseProgress> re
             Sets = exerciseProgress.Sets,
             Reps = exerciseProgress.Reps,
             Status = exerciseProgress.Status,
+            StartedAt = exerciseProgress.StartedAt == null
+                ? null
+                : utcLocalConverter.ConvertUtcToLocal(exerciseProgress.StartedAt.Value, userZone),
+
+            CompletedAt = exerciseProgress.CompletedAt == null
+                ? null
+                : utcLocalConverter.ConvertUtcToLocal(exerciseProgress.CompletedAt.Value, userZone),
+                
             Notes = exerciseProgress.Notes.Select(x => new NoteDto()
             {
                 Id = x.Id,
                 Content = x.Content
             })
-
         };
-        if (exerciseProgress.StartedAt is not null)
-            response.StartedAt = utcLocalConverter
-                .ConvertUtcToLocal(exerciseProgress.StartedAt.GetValueOrDefault(), userZone);
-
-        if (exerciseProgress.CompletedAt is not null)
-            response.CompletedAt = utcLocalConverter
-                .ConvertUtcToLocal(exerciseProgress.CompletedAt.GetValueOrDefault(), userZone);
-
         logger.LogDebug("Retrieved exercise progress details. ExerciseProgressId: {ExerciseProgressId}, NotesCount: {NotesCount}, UserId: {UserId}",
             exerciseProgressId, exerciseProgress.Notes.Count, userId);
 

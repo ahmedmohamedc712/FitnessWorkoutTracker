@@ -42,7 +42,7 @@ public class StartExerciseProgressUseCase(IRepository<ExerciseProgress> reposito
         {
             Id = exerciseProgressId,
             StartedAt = utcLocalConverter
-                .ConvertUtcToLocal(exerciseProgress.StartedAt.GetValueOrDefault(), userZone),
+                .ConvertUtcToLocal(exerciseProgress.StartedAt!.Value, userZone),
 
             Sets = exerciseProgress.Sets,
             Reps = exerciseProgress.Reps,

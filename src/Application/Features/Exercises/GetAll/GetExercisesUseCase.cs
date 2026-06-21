@@ -25,7 +25,7 @@ namespace Application.Features.Exercises.GetAll
 
             var userId = currentUserAccessor.GetId();
 
-            var workoutSpec = new WorkoutExistsReadonlySpec(workoutId, userId);
+            var workoutSpec = new GetWorkoutByIdReadonlySpec(workoutId, userId);
             var workoutExists = await workoutRepository.AnyAsync(workoutSpec);
 
             if (!workoutExists)

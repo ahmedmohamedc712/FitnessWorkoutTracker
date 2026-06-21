@@ -49,10 +49,10 @@ public class GetExerciseProgressesUseCase(IReadRepository<ScheduledWorkout> sche
             Status = exerciseProgress.Status,
             StartedAt = exerciseProgress.StartedAt == null
                     ? null
-                    : utcLocalConverter.ConvertUtcToLocal(exerciseProgress.StartedAt.GetValueOrDefault(), userZone),
+                    : utcLocalConverter.ConvertUtcToLocal(exerciseProgress.StartedAt.Value, userZone),
             CompletedAt = exerciseProgress.CompletedAt == null
                     ? null
-                    : utcLocalConverter.ConvertUtcToLocal(exerciseProgress.CompletedAt.GetValueOrDefault(), userZone)
+                    : utcLocalConverter.ConvertUtcToLocal(exerciseProgress.CompletedAt.Value, userZone)
 
         }).ToList();
 
