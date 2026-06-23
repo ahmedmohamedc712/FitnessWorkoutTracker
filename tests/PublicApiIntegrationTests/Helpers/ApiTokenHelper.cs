@@ -6,16 +6,13 @@ namespace PublicApiIntegrationTests.Helpers;
 
 public class ApiTokenHelper
 {
-    public static string GetToken(CustomWebApplicationFactory factory)
+    public static string GetToken(CustomWebApplicationFactory factory, User user)
     {
         using var scope = factory.Services.CreateScope();
 
         var jwtProvider = scope.ServiceProvider.GetRequiredService<IJwtProvider>();
 
-        Guid userId = Guid.NewGuid();
-        string email = "test@gmail.com";
-
-        var token = jwtProvider.Create(userId, email);
+        var token = jwtProvider.Create(user.Id, user.Email);
         return token;
     }
 }

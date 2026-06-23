@@ -15,15 +15,11 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLif
 {
     private CustomWebApplicationFactory _factory;
     private HttpClient _client;
-    private readonly IPasswordHasher _passwordHasher;
     private IServiceScope CreateScope() => _factory.Services.CreateScope();
     public SignupTests(CustomWebApplicationFactory factory) 
     {
         _factory = factory;
-        _client = _factory.CreateClient();
-        
-        using var scope = _factory.Services.CreateScope();
-        _passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>(); // singleton
+        _client = _factory.CreateClient();        
     }
     public async Task InitializeAsync()
     {
@@ -69,7 +65,7 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLif
 
         await _factory.SeedAsync(dbContext, async dbContext =>
         {
-            var user = DataSeedHelper.CreateTestUser(_passwordHasher);
+            var user = DataSeedHelper.CreateUser();
 
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();

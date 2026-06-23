@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -19,8 +19,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\PublicApi\PublicApi.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WorkoutEndpoints\" />
   </ItemGroup>
 </Project>
