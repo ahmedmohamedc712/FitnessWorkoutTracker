@@ -1,81 +1,63 @@
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Respawn;
+using Microsoft.Data.SqlClient;
+using Testcontainers.MsSql;
 
 namespace PublicApiIntegrationTests;
 
-public class CustomWebApplicationFactory : WebApplicationFactory<Program>
+public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private SqliteConnection _connection = null!;
+    private MsSqlContainer _dbContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-latest")
+        .Build();
 
-    protected override void ConfigureWebHost(
-        IWebHostBuilder builder)
+    private Respawner _respawner = default!;
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseEnvironment("Testing");
+        Environment.SetEnvironmentVariable("ConnectionStrings:DefaultConnection",
+            _dbContainer.GetConnectionString());
+    }
+    public async Task InitializeAsync()
+    {
+        await _dbContainer.StartAsync();
 
-        builder.ConfigureServices(services =>
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await db.Database.MigrateAsync();
+
+        await using var connection = new SqlConnection(_dbContainer.GetConnectionString());
+        await connection.OpenAsync();
+
+        _respawner = await Respawner.CreateAsync(connection, new RespawnerOptions
         {
-            services.RemoveAll<DbContextOptions<AppDbContext>>();
-
-            services.RemoveAll<AppDbContext>();
-
-            _connection =
-                new SqliteConnection(
-                    "DataSource=:memory:");
-
-            _connection.Open();
-
-            services.AddDbContext<AppDbContext>(
-                options =>
-                {
-                    options.UseSqlite(
-                        _connection);
-                });
-
-            var provider =
-                services.BuildServiceProvider();
-
-            using var scope =
-                provider.CreateScope();
-
-            var dbContext =
-                scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-            dbContext.Database.EnsureCreated();
+            TablesToIgnore = ["__EFMigrationsHistory"],
+            DbAdapter = DbAdapter.SqlServer
         });
     }
-
-    public async Task ResetDatabase()
+    public async Task ResetDatabaseAsync()
     {
-        using var scope =
-            Services.CreateScope();
+        await using var connection = new SqlConnection(_dbContainer.GetConnectionString());
+        await connection.OpenAsync();
 
-        var dbContext =
-            scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await _respawner.ResetAsync(connection);
+    }
 
-        await dbContext.Database.EnsureDeletedAsync();
-        await dbContext.Database.EnsureCreatedAsync();
+    public async Task SeedAsync(AppDbContext dbContext, Func<AppDbContext, Task> action)
+    {
+        await action(dbContext);
+    }
+    public async Task SeedAsync(Func<AppDbContext, Task> action)
+    {
+        using var scope = Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await action(dbContext);
     }
 
     public new async Task DisposeAsync()
     {
-        await _connection.DisposeAsync();
-    }
-
-    public async Task SeedAsync(
-        Func<AppDbContext, Task> action)
-    {
-        using var scope =
-            Services.CreateScope();
-
-        var db =
-            scope.ServiceProvider
-                .GetRequiredService<AppDbContext>();
-
-        await action(db);
+        await _dbContainer.DisposeAsync();
     }
 }

@@ -7,24 +7,33 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PublicApi.Endpoints.Authentication.Signup;
+using PublicApiIntegrationTests.Helpers;
 
 namespace PublicApiIntegrationTests.AuthEndpoints;
 
-public class SignupTests : IClassFixture<CustomWebApplicationFactory>
+public class SignupTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLifetime
 {
-    private readonly CustomWebApplicationFactory _factory;
-    private readonly HttpClient _client;
-
-    public SignupTests(CustomWebApplicationFactory factory)
+    private CustomWebApplicationFactory _factory;
+    private HttpClient _client;
+    private readonly IPasswordHasher _passwordHasher;
+    private IServiceScope CreateScope() => _factory.Services.CreateScope();
+    public SignupTests(CustomWebApplicationFactory factory) 
     {
         _factory = factory;
-        _client = factory.CreateClient();
-    } 
+        _client = _factory.CreateClient();
+        
+        using var scope = _factory.Services.CreateScope();
+        _passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>(); // singleton
+    }
+    public async Task InitializeAsync()
+    {
+        await _factory.ResetDatabaseAsync();
+    }
+    public Task DisposeAsync() => Task.CompletedTask;
 
     [Fact]
     public async Task Signup_WithValidRequest_ReturnsOk()
     {
-        await _factory.ResetDatabase();
         // Arrange
         var request = new SignupRequest()
         {
@@ -42,7 +51,6 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>
 
         using var scope = _factory.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
         var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
         
         Assert.NotNull(user);
@@ -55,20 +63,18 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>
     [Fact]
     public async Task Signup_WithDuplicateEmail_ReturnsConflict()
     {
-        await _factory.ResetDatabase();
+        // Arrange
+        using var scope = CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        using var scope = _factory.Services.CreateScope();
-        var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-
-        await _factory.SeedAsync(async dbContext =>
+        await _factory.SeedAsync(dbContext, async dbContext =>
         {
-            var user = new User("test", "test@gmail.com", passwordHasher.HashPassword("Test@1234"));
+            var user = DataSeedHelper.CreateTestUser(_passwordHasher);
 
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
         });
 
-        // Arrange
         var request = new SignupRequest()
         {
             Username = "test",
@@ -82,8 +88,6 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>
 
         // Assert 
         Assert.Equal(StatusCodes.Status409Conflict, (int)response.StatusCode);
-
-        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 
