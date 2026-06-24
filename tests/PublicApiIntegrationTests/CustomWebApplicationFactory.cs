@@ -18,7 +18,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         Environment.SetEnvironmentVariable("ConnectionStrings:DefaultConnection",
-            _dbContainer.GetConnectionString());
+            _dbContainer.GetConnectionString()); // Make sure to use the same key of connection string used in development
     }
     public async Task InitializeAsync()
     {
@@ -44,11 +44,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
 
         await _respawner.ResetAsync(connection);
     }
-
-    public async Task SeedAsync(AppDbContext dbContext, Func<AppDbContext, Task> action)
-    {
-        await action(dbContext);
-    }
+    
     public async Task SeedAsync(Func<AppDbContext, Task> action)
     {
         using var scope = Services.CreateScope();

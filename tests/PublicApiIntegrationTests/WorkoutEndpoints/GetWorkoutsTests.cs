@@ -15,7 +15,9 @@ using System.Text.Json;
 
 namespace PublicApiIntegrationTests.WorkoutEndpoints;
 
-public class GetWorkoutsTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLifetime
+
+[Collection("Database Shared Collection")]
+public class GetWorkoutsTests : IAsyncLifetime
 {
     private const string TimeZoneHeader = "X-TimeZone";
 

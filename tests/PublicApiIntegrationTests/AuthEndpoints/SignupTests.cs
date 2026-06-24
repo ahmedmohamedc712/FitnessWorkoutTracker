@@ -11,7 +11,8 @@ using PublicApiIntegrationTests.Helpers;
 
 namespace PublicApiIntegrationTests.AuthEndpoints;
 
-public class SignupTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLifetime
+[Collection("Database Shared Collection")]
+public class SignupTests : IAsyncLifetime
 {
     private CustomWebApplicationFactory _factory;
     private HttpClient _client;
@@ -60,10 +61,7 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLif
     public async Task Signup_WithDuplicateEmail_ReturnsConflict()
     {
         // Arrange
-        using var scope = CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-        await _factory.SeedAsync(dbContext, async dbContext =>
+        await _factory.SeedAsync(async dbContext =>
         {
             var user = DataSeedHelper.CreateUser();
 
@@ -84,6 +82,9 @@ public class SignupTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLif
 
         // Assert 
         Assert.Equal(StatusCodes.Status409Conflict, (int)response.StatusCode);
+
+        using var scope = CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 

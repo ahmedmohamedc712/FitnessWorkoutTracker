@@ -8,7 +8,9 @@ using System.Net.Http.Json;
 
 namespace PublicApiIntegrationTests.AuthEndpoints;
 
-public class LoginTests : IClassFixture<CustomWebApplicationFactory>, IAsyncLifetime
+
+[Collection("Database Shared Collection")]
+public class LoginTests : IAsyncLifetime
 {
     private readonly CustomWebApplicationFactory _factory;
     private readonly HttpClient _client;
