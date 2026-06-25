@@ -3,6 +3,7 @@ using Application.Exceptions;
 using Application.Specifications.ExerciseProgresses;
 using Application.Specifications.ScheduledWorkouts;
 using Domain.Entities;
+using Domain.Exceptions;
 using NodaTime.TimeZones;
 
 namespace Application.Features.ExerciseProgresses.GetAll;
@@ -24,9 +25,9 @@ public class GetExerciseProgressesUseCase(IReadRepository<ScheduledWorkout> sche
         var userId = currentUserAccessor.GetId();
 
         var scheduledSpec = new ScheduledWorkoutExistsReadonlySpec(scheduledWorkoutId, userId);
-        var scheduledWorkoutExists = await scheduledWorkoutRepository.AnyAsync(scheduledSpec);
+        var scheduledWorkout = await scheduledWorkoutRepository.FirstOrDefaultAsync(scheduledSpec);
 
-        if (!scheduledWorkoutExists)
+        if (scheduledWorkout is null)
         {
             logger.LogInformation("Scheduled workout with ID `{ScheduledWorkoutId}` not found. UserId: {UserId}",
                 scheduledWorkoutId,
@@ -35,6 +36,11 @@ public class GetExerciseProgressesUseCase(IReadRepository<ScheduledWorkout> sche
             throw new NotFoundException($"Scheduled workout with ID `{scheduledWorkoutId}` not found.");
         }
 
+        if (scheduledWorkout.Status == WorkoutStatus.Pending)
+        {
+            throw new ScheduledWorkoutPendingException("Scheduled workout is pending and does not have exercise progresses.");
+        }
+                
         var exerciseSpec = new GetExerciseProgressesWithExerciseReadonlySpec(scheduledWorkoutId, userId);
 
         var exerciseProgresses = await exerciseProgressRepository.ListAsync(exerciseSpec);
