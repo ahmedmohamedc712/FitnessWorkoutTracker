@@ -17,6 +17,6 @@ public class CancelScheduledWorkoutEndpoint(ICancelScheduledWorkoutUseCase cance
 
         await cancelScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId);
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 }

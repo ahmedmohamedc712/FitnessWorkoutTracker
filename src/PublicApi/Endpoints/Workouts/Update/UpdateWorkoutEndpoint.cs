@@ -17,6 +17,6 @@ public class UpdateWorkoutEndpoint(IUpdateWorkoutUseCase updateWorkoutUseCase)
 
         await updateWorkoutUseCase.ExecuteAsync(workoutId, req);
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 }

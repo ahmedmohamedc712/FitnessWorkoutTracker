@@ -21,7 +21,7 @@ public class GetScheduledWorkoutByIdEndpoint(
 
         var scheduledWorkoutDto = await getScheduledWorkoutByIdUseCase.ExecuteAsync(scheduledWorkoutId, userZone);
 
-        await SendAsync(scheduledWorkoutDto, cancellation: ct);
+        await Send.OkAsync(scheduledWorkoutDto, cancellation: ct);
     }
 
 }

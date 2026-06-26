@@ -14,12 +14,12 @@ public class StartExerciseProgressEndpoint(IStartExerciseProgressUseCase startEx
     public override async Task HandleAsync(StartExerciseRequest req, CancellationToken ct)
     {
         var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
-        
+
         var exerciseProgressId = Route<Guid>("id");
 
         var response = await startExerciseProgressUseCase.ExecuteAsync(exerciseProgressId, req, userZone);
 
-        await SendAsync(response, cancellation: ct);
+        await Send.OkAsync(response, cancellation: ct);
     }
 
 }

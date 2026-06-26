@@ -22,7 +22,7 @@ public class GetScheduledWorkoutsEndpoint(IGetScheduledWorkoutsUseCase getSchedu
 
         var response = await getScheduledWorkoutsUseCase.ExecuteAsync(query, workoutId, userZone);
 
-        await SendAsync(response, cancellation: ct);
+        await Send.OkAsync(response, cancellation: ct);
     }
 
 }

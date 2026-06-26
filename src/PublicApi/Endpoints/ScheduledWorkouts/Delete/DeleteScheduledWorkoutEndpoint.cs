@@ -17,7 +17,7 @@ public class DeleteScheduledWorkoutEndpoint(IDeleteScheduledWorkoutUseCase delet
 
         await deleteScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId);
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 
 }

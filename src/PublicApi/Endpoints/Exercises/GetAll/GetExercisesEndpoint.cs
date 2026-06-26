@@ -22,7 +22,7 @@ namespace PublicApi.Endpoints.Exercises.GetAll
 
             var response = await getExercisesUseCases.ExecuteAsync(query, workoutId, userZone);
 
-            await SendAsync(response, cancellation: ct);
+            await Send.OkAsync(response, cancellation: ct);
         }
     }
 }

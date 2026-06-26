@@ -20,6 +20,6 @@ public class GetExerciseProgressesEndpoint(IGetExerciseProgressesUseCase getExer
         var response = await getExerciseProgressesUseCase
             .ExecuteAsync(scheduledWorkoutId, userZone);
 
-        await SendAsync(response, cancellation: ct);
+        await Send.OkAsync(response, cancellation: ct);
     }
 }

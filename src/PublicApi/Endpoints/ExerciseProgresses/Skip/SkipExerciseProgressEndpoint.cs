@@ -17,7 +17,7 @@ public class SkipExerciseProgressEndpoint(ISkipExerciseProgressUseCase skipExerc
 
         await skipExerciseProgressUseCase.ExecuteAsync(exerciseProgressId);
 
-        await SendNoContentAsync(cancellation: ct);
+        await Send.NoContentAsync(cancellation: ct);
     }
 
 }

@@ -18,7 +18,7 @@ public class StartScheduledWorkoutEndpoint(IStartScheduledWorkoutUseCase startSc
 
         await startScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId);
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 
 }

@@ -30,7 +30,7 @@ public class AddNoteToExerciseProgressTests : IAsyncLifetime
     public Task DisposeAsync() => Task.CompletedTask;
 
     [Fact]
-    public async Task AddNoteToExerciseProgress_WithValidRequest_ReturnsOkAndAddsNote()
+    public async Task AddNoteToExerciseProgress_WithValidRequest_ReturnsNoContent()
     {
         // Arrange
         var user = DataSeedHelper.CreateUser();
@@ -64,7 +64,7 @@ public class AddNoteToExerciseProgressTests : IAsyncLifetime
         var response = await _client.PostAsJsonAsync($"api/exercise-progresses/{exerciseProgressId}/notes", request);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
         using var scope = _factory.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();

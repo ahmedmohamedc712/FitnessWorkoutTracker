@@ -17,6 +17,6 @@ public class AddNoteToExerciseProgressEndpoint(IAddNoteToExerciseProgressUseCase
 
         await addNoteToExerciseProgressUseCase.ExecuteAsync(exerciseProgressId, req);
 
-        await SendOkAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 }

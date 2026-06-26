@@ -20,7 +20,7 @@ public class RescheduleWorkoutEndpoint(IRescheduleWorkoutUseCase rescheduleWorko
 
         await rescheduleWorkoutUseCase.ExecuteAsync(scheduledWorkoutId, userZone, req.SessionDate);
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 
 }

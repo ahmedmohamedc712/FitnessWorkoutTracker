@@ -15,7 +15,7 @@ namespace PublicApi.Endpoints.Authentication.Login
         {
             var response = await loginUseCase.ExecuteAsync(req);
 
-            await SendAsync(response, cancellation: ct);
+            await Send.OkAsync(response, cancellation: ct);
         }
     }
 }

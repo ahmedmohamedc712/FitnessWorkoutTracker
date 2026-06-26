@@ -16,7 +16,7 @@ public class SignupEndpoint(ISignupUseCase signupUseCase) : Endpoint<SignupReque
         var result = await signupUseCase.ExecuteAsync(
             new SignupCommand(req.Username, req.Email, req.Password));
 
-        await SendAsync(new SignupResult()
+        await Send.OkAsync(new SignupResult()
         {
             Token = result.Token
         });

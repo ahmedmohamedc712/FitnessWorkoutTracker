@@ -20,9 +20,8 @@ public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseC
 
         var id = await scheduleWorkoutUseCase.ExecuteAsync(req.SessionDate, workoutId, userZone);
 
-        await SendCreatedAtAsync<GetScheduledWorkoutByIdEndpoint>(
+        await Send.CreatedAtAsync<GetScheduledWorkoutByIdEndpoint>(
             new { id },
-            new EmptyResponse(),
             generateAbsoluteUrl: true,
             cancellation: ct);
     }

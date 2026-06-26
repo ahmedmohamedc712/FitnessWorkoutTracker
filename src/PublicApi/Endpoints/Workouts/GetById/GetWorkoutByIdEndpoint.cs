@@ -20,6 +20,6 @@ public class GetWorkoutByIdEndpoint(IGetWorkoutByIdUseCase getWorkoutByIdUseCase
 
         var response = await getWorkoutByIdUseCase.ExecuteAsync(workoutId, userZone);
 
-        await SendAsync(response, cancellation: ct);
+        await Send.OkAsync(response, cancellation: ct);
     }
 }

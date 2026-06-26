@@ -17,6 +17,6 @@ public class FinishScheduledWorkoutEndpoint(IFinishScheduledWorkoutUseCase finis
 
         await finishScheduledWorkoutUseCase.ExecuteAsync(scheduledWorkoutId);
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 }

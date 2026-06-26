@@ -17,7 +17,7 @@ public class CompleteExerciseProgressEndpoint(ICompleteExerciseProgressUseCase c
 
         await completeExerciseProgressUseCase.ExecuteAsync(exerciseProgressId);
 
-        await SendNoContentAsync(cancellation: ct);
+        await Send.NoContentAsync(cancellation: ct);
     }
 
 }

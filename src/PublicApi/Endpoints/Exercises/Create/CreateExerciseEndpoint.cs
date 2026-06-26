@@ -16,7 +16,7 @@ namespace PublicApi.Endpoints.Exercises.Create
 
             var response = await createExerciseUseCase.ExecuteAsync(workoutId, req);
 
-            await SendAsync(response, cancellation: ct);
+            await Send.OkAsync(response, cancellation: ct);
         }
     }
 }

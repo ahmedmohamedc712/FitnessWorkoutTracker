@@ -71,6 +71,8 @@ builder.Services.AddAuthentication()
         };
     });
 
+builder.Services.AddAuthorization();
+
 builder.Services.AddHealthChecks()
     .AddSqlServer(connectionString);
 
