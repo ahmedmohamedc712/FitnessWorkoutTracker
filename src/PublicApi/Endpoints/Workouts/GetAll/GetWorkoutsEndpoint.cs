@@ -14,11 +14,9 @@ namespace PublicApi.Endpoints.Workouts.GetAll
 
         public override async Task HandleAsync(GetWorkoutsEndpointRequest req, CancellationToken ct)
         {
-            var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
-
             var query = new GetWorkoutsQuery(req.Page, req.PageSize, req.SearchTerm, req.SortOrder);
 
-            var response = await getWorkoutsUseCase.ExecuteAsync(query, userZone);
+            var response = await getWorkoutsUseCase.ExecuteAsync(query, req.UserZone);
 
             await Send.OkAsync(response, cancellation: ct);
         }

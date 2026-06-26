@@ -14,13 +14,11 @@ namespace PublicApi.Endpoints.Exercises.GetAll
 
         public override async Task HandleAsync(GetExercisesEndpointRequest req, CancellationToken ct)
         {
-            var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
-
             var workoutId = Route<Guid>("workoutId");
 
             var query = new GetExercisesQuery(req.Page, req.PageSize, req.SearchTerm, req.SortOrder);
 
-            var response = await getExercisesUseCases.ExecuteAsync(query, workoutId, userZone);
+            var response = await getExercisesUseCases.ExecuteAsync(query, workoutId, req.UserZone);
 
             await Send.OkAsync(response, cancellation: ct);
         }

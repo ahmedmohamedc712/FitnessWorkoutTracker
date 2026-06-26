@@ -19,14 +19,6 @@ public class GetScheduledWorkoutsUseCase(
         string userZone
     )
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Timezone information missing for retrieving scheduled workouts. WorkoutId: {WorkoutId}",
-                workoutId);
-
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var workoutSpec = new GetWorkoutByIdReadonlySpec(workoutId, userId);

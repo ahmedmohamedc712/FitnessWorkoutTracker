@@ -14,12 +14,6 @@ public class GetScheduledWorkoutByIdUseCase(IReadRepository<ScheduledWorkout> re
 {
     public async Task<ScheduledWorkoutDto> ExecuteAsync(Guid scheduledWorkoutId, string userZone)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Timezone information missing for retrieving scheduled workout. ScheduledWorkoutId: {ScheduledWorkoutId}", scheduledWorkoutId);
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var spec =
@@ -32,7 +26,6 @@ public class GetScheduledWorkoutByIdUseCase(IReadRepository<ScheduledWorkout> re
             logger.LogInformation("Scheduled workout with ID `{ScheduledWorkoutId}` not found. UserId: {UserId}", scheduledWorkoutId, userId);
             throw new NotFoundException($"Scheduled workout with ID `{scheduledWorkoutId}` not found.");
         }
-
 
         var scheduledWorkoutDto = new ScheduledWorkoutDto()
         {

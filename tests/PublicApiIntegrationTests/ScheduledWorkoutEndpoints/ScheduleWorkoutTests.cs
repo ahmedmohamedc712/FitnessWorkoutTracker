@@ -52,7 +52,7 @@ public class ScheduleWorkoutTests : IAsyncLifetime
         _client.DefaultRequestHeaders.Add(TimeZoneHeader, zone);
 
         var sessionDate = DateTime.Now.AddDays(1);
-        var request = new ScheduleWorkoutRequest()
+        var request = new ScheduleWorkoutEndpointRequest()
         {
             SessionDate = sessionDate
         };
@@ -96,7 +96,7 @@ public class ScheduleWorkoutTests : IAsyncLifetime
         _client.DefaultRequestHeaders.Add(TimeZoneHeader, zone);
 
         var sessionDate = DateTime.Now.AddDays(1);
-        var request = new ScheduleWorkoutRequest()
+        var request = new ScheduleWorkoutEndpointRequest()
         {
             SessionDate = sessionDate
         };
@@ -135,7 +135,7 @@ public class ScheduleWorkoutTests : IAsyncLifetime
         _client.DefaultRequestHeaders.Add(TimeZoneHeader, zone);
 
         var sessionDate = new DateTime(2026, 1, 1); // past date
-        var request = new ScheduleWorkoutRequest()
+        var request = new ScheduleWorkoutEndpointRequest()
         {
             SessionDate = sessionDate
         };

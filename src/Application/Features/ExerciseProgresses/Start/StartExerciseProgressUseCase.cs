@@ -15,12 +15,6 @@ public class StartExerciseProgressUseCase(IRepository<ExerciseProgress> reposito
         StartExerciseRequest request,
         string userZone)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Timezone information missing for starting exercise progress. ExerciseProgressId: {ExerciseProgressId}", exerciseProgressId);
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var spec = new GetExerciseProgressByIdWithScheduledWorkoutSpec(exerciseProgressId, userId);

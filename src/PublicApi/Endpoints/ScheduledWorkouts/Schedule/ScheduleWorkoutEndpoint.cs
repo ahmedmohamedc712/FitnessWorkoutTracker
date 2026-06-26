@@ -5,20 +5,19 @@ using PublicApi.Endpoints.ScheduledWorkouts.GetById;
 
 namespace PublicApi.Endpoints.ScheduledWorkouts;
 
-public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseCase) : Endpoint<ScheduleWorkoutRequest>
+public class ScheduleWorkoutEndpoint(IScheduleWorkoutUseCase scheduleWorkoutUseCase)
+    : Endpoint<ScheduleWorkoutEndpointRequest>
 {
     public override void Configure()
     {
         Post("api/workouts/{workoutId}/scheduled-workouts");
     }
 
-    public override async Task HandleAsync(ScheduleWorkoutRequest req, CancellationToken ct)
+    public override async Task HandleAsync(ScheduleWorkoutEndpointRequest req, CancellationToken ct)
     {
-        var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
-
         var workoutId = Route<Guid>("workoutId");
 
-        var id = await scheduleWorkoutUseCase.ExecuteAsync(req.SessionDate, workoutId, userZone);
+        var id = await scheduleWorkoutUseCase.ExecuteAsync(req.SessionDate, workoutId, req.UserZone);
 
         await Send.CreatedAtAsync<GetScheduledWorkoutByIdEndpoint>(
             new { id },

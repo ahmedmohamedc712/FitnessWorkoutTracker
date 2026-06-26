@@ -14,13 +14,11 @@ public class GetScheduledWorkoutsEndpoint(IGetScheduledWorkoutsUseCase getSchedu
 
     public override async Task HandleAsync(GetScheduledWorkoutsEndpointRequest req, CancellationToken ct)
     {
-        var userZone = HttpContext.Request.Headers[HeaderNames.TIME_ZONE_HEADER].ToString();
-
         var workoutId = Route<Guid>("workoutId");
 
         var query = new GetScheduledWorkoutsQuery(req.Page, req.PageSize, req.SortOrder);
 
-        var response = await getScheduledWorkoutsUseCase.ExecuteAsync(query, workoutId, userZone);
+        var response = await getScheduledWorkoutsUseCase.ExecuteAsync(query, workoutId, req.UserZone);
 
         await Send.OkAsync(response, cancellation: ct);
     }
