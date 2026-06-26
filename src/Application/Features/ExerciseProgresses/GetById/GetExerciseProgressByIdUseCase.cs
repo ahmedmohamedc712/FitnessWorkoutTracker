@@ -13,12 +13,6 @@ public class GetExerciseProgressByIdUseCase(IReadRepository<ExerciseProgress> re
 {
     public async Task<GetExerciseProgressByIdResponse> ExecuteAsync(Guid exerciseProgressId, string userZone)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Timezone information missing for retrieving exercise progress. ExerciseProgressId: {ExerciseProgressId}", exerciseProgressId);
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var spec = new GetExerciseProgressByIdWithExerciseAndNotesReadonlySpec(exerciseProgressId, userId);

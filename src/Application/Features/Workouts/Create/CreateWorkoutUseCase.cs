@@ -12,7 +12,7 @@ namespace Application.Features.Workouts.Create
         IAppLogger<CreateWorkoutUseCase> logger
     ) : ICreateWorkoutUseCase
     {
-        public async Task<CreateWorkoutResponse> ExecuteAsync(CreateWorkoutCommand command)
+        public async Task<Guid> ExecuteAsync(CreateWorkoutCommand command)
         {
             var userId = currentUserAccessor.GetId();
 
@@ -24,12 +24,7 @@ namespace Application.Features.Workouts.Create
                 workout.Id,
                 userId);
 
-            return new CreateWorkoutResponse()
-            {
-                WorkoutId = workout.Id,
-                Title = command.Title,
-                Description = command.Description
-            };
+            return workout.Id;
         }
     }
 }

@@ -55,7 +55,7 @@ public class UpdateWorkoutTests : IAsyncLifetime
             Title = "Updated Workout 1",
             Description = "Updated description"
         };
-        var response = await _client.PutAsJsonAsync($"api/workouts/{workout1.Id}", request);
+        var response = await _client.PatchAsJsonAsync($"api/workouts/{workout1.Id}", request);
 
         // Assert
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -94,7 +94,7 @@ public class UpdateWorkoutTests : IAsyncLifetime
             Title = "Updated Workout 1",
             Description = "Updated description"
         };
-        var response = await _client.PutAsJsonAsync($"api/workouts/{workout2.Id}", request);
+        var response = await _client.PatchAsJsonAsync($"api/workouts/{workout2.Id}", request);
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

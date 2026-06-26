@@ -8,7 +8,18 @@ public class UpdateWorkoutEndpoint(IUpdateWorkoutUseCase updateWorkoutUseCase)
 {
     public override void Configure()
     {
-        Put("api/workouts/{id}");
+        Patch("api/workouts/{id}");
+        Description(b =>
+        {
+            b.WithSummary("Update workout.");
+            b.WithDescription("Update workout title and description for the current user.");
+
+            b.Produces(StatusCodes.Status204NoContent);
+            b.Produces(StatusCodes.Status404NotFound);
+            b.Produces(StatusCodes.Status401Unauthorized);
+
+            b.WithTags(Constants.Tags.WorkoutsTag);
+        });
     }
 
     public override async Task HandleAsync(UpdateWorkoutRequest req, CancellationToken ct)

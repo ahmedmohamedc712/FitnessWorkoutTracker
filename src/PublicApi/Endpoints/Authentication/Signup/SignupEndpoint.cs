@@ -1,5 +1,6 @@
 using Application.Features.Authentication.Signup;
 using FastEndpoints;
+using PublicApi.Constants;
 
 namespace PublicApi.Endpoints.Authentication.Signup;
 
@@ -9,6 +10,18 @@ public class SignupEndpoint(ISignupUseCase signupUseCase) : Endpoint<SignupReque
     {
         Post("api/auth/signup");
         AllowAnonymous();
+
+        Description(b =>
+        {
+            b.WithSummary("Register a new user.");
+            b.WithDescription("Create a new user account and return an authentication token.");
+
+            b.Produces<SignupResult>(StatusCodes.Status200OK);
+            b.Produces(StatusCodes.Status400BadRequest);
+            b.Produces(StatusCodes.Status409Conflict);
+
+            b.WithTags(Constants.Tags.AuthenticationTag);
+        });
     }
 
     public async override Task HandleAsync(SignupRequest req, CancellationToken ct)

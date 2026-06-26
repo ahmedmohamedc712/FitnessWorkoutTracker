@@ -9,6 +9,18 @@ public class DeleteScheduledWorkoutEndpoint(IDeleteScheduledWorkoutUseCase delet
     public override void Configure()
     {
         Delete("api/scheduled-workouts/{id}");
+
+                Description(b =>
+        {
+            b.WithSummary("Delete a scheduled workout.");
+            b.WithDescription("Delete a scheduled workout for the current user.");
+
+            b.Produces(StatusCodes.Status204NoContent);
+            b.Produces(StatusCodes.Status404NotFound);
+            b.Produces(StatusCodes.Status401Unauthorized);
+
+            b.WithTags(Constants.Tags.ScheduledWorkoutsTag);
+        });
     }
 
     public override async Task HandleAsync(CancellationToken ct)

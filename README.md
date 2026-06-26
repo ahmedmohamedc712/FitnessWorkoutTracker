@@ -4,15 +4,11 @@
 
 A production-oriented ASP.NET Core Web API for managing workouts, scheduling training sessions, and tracking exercise progress.
 
-Built with **Clean Architecture**, **FastEndpoints**, **Entity Framework Core**, **SQL Server**, **JWT Authentication**, the **Specification Pattern**, and **Integration Testing**, the project showcases how business rules can be encapsulated within rich domain models instead of procedural service logic.
+Built with **Clean Architecture**, **FastEndpoints**, **Entity Framework Core**, **SQL Server**, **JWT Authentication**, the **Specification Pattern**, and **Integration Testing** with rich **domain modeling**.
 
----
+# Why?
 
-# Why ?
-
-Many applications implement business logic through service methods while entities act as simple data containers. This project follows a rich domain model instead, where domain entities own their behavior and enforce business rules. The Application layer orchestrates use cases, while the Domain layer protects its own invariants, resulting in a more expressive and maintainable design.
-
----
+As business requirements evolve, backend systems become increasingly difficult to maintain when business logic is spread across multiple layers. This project demonstrates an architectural approach that keeps responsibilities well-defined and allows the domain model to evolve without leaking implementation details into the rest of the application.
 
 # Quick Start
 
@@ -37,6 +33,7 @@ dotnet restore
 
 ## Configure the database
 
+
 Update the connection string in:
 
 ```text
@@ -50,19 +47,26 @@ src/PublicApi/appsettings.json
   }
 }
 ```
+Apply the database migrations
+
+Create the database and apply all Entity Framework Core migrations:
+
+```bash
+dotnet ef database update --project src/Infrastructure --startup-project src/PublicApi
+```
+
+Note: Ensure the dotnet-ef tool is installed. If it isn't, install it with:
+```bash
+dotnet tool install --global dotnet-ef
+```
 
 ## Configure JWT settings
 
-Use **user-secrets** or **Environment variables** but keep in mind that user-secrets only used in **Development Environment**. Example:
-**user-secrets:**
-
-```json
-{
-  "Jwt": {
-    "SigningKey": "AddYourSuperSecretKey",
-    "LifeTime": 60
-  }
-}
+Use **user-secrets** or **environment variables** to configure JWT settings. Note that **user-secrets are only available in the Development environment.**
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "Jwt:SigningKey" "AddYourSuperSecretKey"
+dotnet user-secrets set "Jwt:LifeTime" 60
 ```
 
 **Note:** LifeTime is in minutes
@@ -94,15 +98,26 @@ Authenticate using:
 
 Use the returned JWT bearer token to access protected endpoints.
 
-## Capabilities
+## Highlights
+
+### Business
 
 - Workout management
 - Exercise management
-- Scheduled workout management
+- Workout scheduling
 - Exercise progress tracking
-- Pagination
-- Filtering
-- Sorting
+
+### Engineering
+
+- Rich Domain Model
+- Clean Architecture
+- JWT Authentication
+- Specification Pattern
+- Pagination, Filtering & Sorting
+- FluentValidation
+- Swagger / OpenAPI
+- Health Checks
+- Integration Testing with Testcontainers
 
 ## Health Check
 

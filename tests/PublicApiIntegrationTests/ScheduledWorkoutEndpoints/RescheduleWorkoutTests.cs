@@ -60,7 +60,7 @@ public class RescheduleWorkoutTests : IAsyncLifetime
         _client.DefaultRequestHeaders.Add(TimeZoneHeader, zone);
 
         var sessionDate = DateTime.Now.AddDays(2);
-        var request = new ScheduleWorkoutRequest()
+        var request = new ScheduleWorkoutEndpointRequest()
         {
             SessionDate = sessionDate
         };
@@ -109,7 +109,7 @@ public class RescheduleWorkoutTests : IAsyncLifetime
         _client = _factory.CreateAuthenticatedClient(user);
         _client.DefaultRequestHeaders.Add(TimeZoneHeader, zone);
 
-        var request = new ScheduleWorkoutRequest()
+        var request = new ScheduleWorkoutEndpointRequest()
         {
             SessionDate = DateTime.Now.AddDays(2)
         };
@@ -147,7 +147,7 @@ public class RescheduleWorkoutTests : IAsyncLifetime
         _client = _factory.CreateAuthenticatedClient(user);
         _client.DefaultRequestHeaders.Add(TimeZoneHeader, zone);
 
-        var request = new ScheduleWorkoutRequest()
+        var request = new ScheduleWorkoutEndpointRequest()
         {
             SessionDate = DateTime.Now.AddDays(-1)
         };

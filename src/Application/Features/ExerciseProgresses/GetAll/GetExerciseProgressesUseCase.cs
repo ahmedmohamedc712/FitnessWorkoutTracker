@@ -16,12 +16,6 @@ public class GetExerciseProgressesUseCase(IReadRepository<ScheduledWorkout> sche
 {
     public async Task<GetExerciseProgressesResponse> ExecuteAsync(Guid scheduledWorkoutId, string userZone)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Timezone information missing for retrieving exercise progresses.");
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var scheduledSpec = new ScheduledWorkoutExistsReadonlySpec(scheduledWorkoutId, userId);

@@ -13,12 +13,6 @@ public class GetWorkoutByIdUseCase(IReadRepository<Workout> readRepository,
 {
     public async Task<GetWorkoutByIdResponse> ExecuteAsync(Guid workoutId, string userZone)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Time zone header missing for retrieving workout.");
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var spec = new GetWorkoutByIdReadonlySpec(workoutId, userId);

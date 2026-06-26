@@ -17,12 +17,6 @@ namespace Application.Features.Exercises.GetAll
     {
         public async Task<GetExercisesResponse> ExecuteAsync(GetExercisesQuery query, Guid workoutId, string userZone)
         {
-            if (string.IsNullOrWhiteSpace(userZone))
-            {
-                logger.LogDebug("Timezone information missing for retrieving exercising. WorkoutId: {WorkoutId}", workoutId);
-                throw new DateTimeZoneNotFoundException("");
-            }
-
             var userId = currentUserAccessor.GetId();
 
             var workoutSpec = new GetWorkoutByIdReadonlySpec(workoutId, userId);
@@ -45,7 +39,7 @@ namespace Application.Features.Exercises.GetAll
                 take: query.PageSize
             );
 
-            var  exercises = await exerciseRepository.ListAsync(exercisesSpec);
+            var exercises = await exerciseRepository.ListAsync(exercisesSpec);
 
             var exerciseDtos = exercises.Select(x => new ExerciseDto()
             {

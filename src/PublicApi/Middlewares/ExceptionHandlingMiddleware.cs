@@ -22,7 +22,7 @@ public class ExceptionHandlingMiddleware(RequestDelegate next,
         catch (DateTimeZoneNotFoundException)
         {
             await WriteProperProblemDetails(context, StatusCodes.Status400BadRequest, 
-                "Invalid user time zone. Check 'X-TimeZone' header.");
+                "Invalid X-TimeZone header value. check it and try again.");
         }
         catch (InvalidUserCredentialsException ex)
         {

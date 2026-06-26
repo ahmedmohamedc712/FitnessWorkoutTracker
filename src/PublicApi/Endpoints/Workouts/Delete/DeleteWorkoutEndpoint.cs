@@ -8,6 +8,18 @@ public class DeleteWorkoutEndpoint(IDeleteWorkoutUseCase deleteWorkoutUseCase)
     public override void Configure()
     {
         Delete("api/workouts/{id}");
+
+        Description(b =>
+        {
+            b.WithSummary("Delete a workout");
+            b.WithDescription("Delete a workout for the current user");
+
+            b.Produces(StatusCodes.Status204NoContent);
+            b.Produces(StatusCodes.Status404NotFound);
+            b.Produces(StatusCodes.Status401Unauthorized);
+            
+            b.WithTags(Constants.Tags.WorkoutsTag);
+        });
     }
 
     public override async Task HandleAsync(CancellationToken ct)

@@ -13,12 +13,6 @@ public class RescheduleWorkoutUseCase(IRepository<ScheduledWorkout> repository,
 {
     public async Task ExecuteAsync(Guid scheduledWorkoutId, string userZone, DateTime sessionDate)
     {
-        if (string.IsNullOrWhiteSpace(userZone))
-        {
-            logger.LogDebug("Timezone information missing for rescheduling workout. ScheduledWorkoutId: {ScheduledWorkoutId}", scheduledWorkoutId);
-            throw new DateTimeZoneNotFoundException("");
-        }
-
         var userId = currentUserAccessor.GetId();
 
         var spec = new GetScheduledWorkoutByIdSpec(scheduledWorkoutId, userId);

@@ -46,13 +46,10 @@ public class CreateWorkoutTests : IAsyncLifetime
         var response = await _client.PostAsJsonAsync("api/workouts", command);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);    
+        var locationExists = response.Headers.Contains("Location");
 
-        var createResponse = await response.Content.ReadFromJsonAsync<CreateWorkoutResponse>();
-        
-        Assert.NotNull(createResponse);
-        Assert.Equal(command.Title, createResponse.Title);
-        Assert.Equal(command.Description, createResponse.Description);
+        Assert.True(locationExists);
     }
 
     [Fact]
